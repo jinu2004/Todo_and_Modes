@@ -62,7 +62,6 @@ dependencies {
 
 	//viewModel
 	val lifecycle_version = "2.6.2"
-	val arch_version = "2.2.0"
 	implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:$lifecycle_version")
 	implementation("androidx.lifecycle:lifecycle-viewmodel-compose:$lifecycle_version")
 	implementation("androidx.lifecycle:lifecycle-livedata-ktx:$lifecycle_version")
@@ -71,4 +70,5 @@ dependencies {
 	implementation("androidx.lifecycle:lifecycle-viewmodel-savedstate:$lifecycle_version")
 
 	//other layouts
+	implementation("com.patrykandpatrick.vico:views:1.9.2")
 }

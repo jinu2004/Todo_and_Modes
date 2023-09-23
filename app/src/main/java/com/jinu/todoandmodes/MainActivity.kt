@@ -23,7 +23,6 @@ class MainActivity : AppCompatActivity() {
 
 
 
-
 		binding.bottomNavigationView.setOnItemSelectedListener {
 			when(it.itemId)
 			{

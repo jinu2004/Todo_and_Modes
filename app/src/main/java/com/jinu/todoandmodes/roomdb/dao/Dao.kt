@@ -1,0 +1,38 @@
+package com.jinu.todoandmodes.roomdb.dao
+
+import androidx.lifecycle.LiveData
+import androidx.room.Dao
+import androidx.room.Insert
+import androidx.room.OnConflictStrategy
+import androidx.room.Query
+import com.jinu.todoandmodes.roomdb.dataclass.Category
+import com.jinu.todoandmodes.roomdb.dataclass.StepTask
+import com.jinu.todoandmodes.roomdb.dataclass.TaskData
+
+@Dao
+interface Dao {
+	@Query("SELECT*FROM TaskTable")
+	fun allTask():LiveData<List<TaskData>>
+	@Query("SELECT*FROM category")
+	fun allCategory():LiveData<List<Category>>
+
+
+	@Query("SELECT*FROM TaskTable WHERE categoryId LIKE:categoryId")
+	fun getByCategoryID(categoryId:Int):LiveData<List<TaskData>>
+
+	@Query("SELECT*FROM TaskTable WHERE taskStatus LIKE:status")
+	fun getListByStatus(status:Boolean):LiveData<List<TaskData>>
+
+	@Insert(onConflict = OnConflictStrategy.REPLACE)
+	suspend fun addNewTask(taskData: TaskData)
+
+	@Insert(onConflict = OnConflictStrategy.REPLACE)
+	suspend fun addNewCategory(category: Category)
+	@Insert(onConflict = OnConflictStrategy.IGNORE)
+	suspend fun addSub(stepTask: StepTask)
+
+	@Query("SELECT*FROM StepTable WHERE id LIKE:mainTaskId")
+	fun getAllStep(mainTaskId:Int):LiveData<List<StepTask>>
+
+
+}

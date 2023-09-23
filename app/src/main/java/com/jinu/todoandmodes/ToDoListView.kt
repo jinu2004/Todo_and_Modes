@@ -19,7 +19,7 @@ class ToDoListView : Fragment()
 		inflater: LayoutInflater,
 		container: ViewGroup?,
 		savedInstanceState: Bundle?
-	): View? {
+	): View {
 		binding = FragmentToDoListBinding.inflate(inflater,container,false)
 
 		binding.recycler.apply {

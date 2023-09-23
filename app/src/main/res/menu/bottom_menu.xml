@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+
+    <item
+        android:id="@+id/home"
+        android:checkable="false"
+        android:enabled="true"
+        android:icon="@drawable/round_home_24"
+        android:title="@string/tasks"
+        android:visible="true"
+        app:showAsAction="ifRoom" />
+    <item
+        android:id="@+id/task"
+        android:checkable="false"
+        android:enabled="true"
+        android:icon="@drawable/round_checklist_24"
+        android:title="@string/tasks"
+        android:visible="true"
+        app:showAsAction="ifRoom" />
+    <item
+        android:id="@+id/modes"
+        android:icon="@drawable/round_view_module_24"
+        android:title="@string/modes"
+        app:showAsAction="ifRoom" />
+    <item
+        android:id="@+id/calender"
+        android:icon="@drawable/round_calendar_month_24"
+        android:title="@string/calender"
+        app:showAsAction="always" />
+    <item
+        android:id="@+id/mine"
+        android:icon="@drawable/round_person_24"
+        android:title="@string/mine"
+        app:showAsAction="always" />
+</menu>

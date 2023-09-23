@@ -3,7 +3,6 @@ package com.jinu.todoandmodes.roomdb.viewmodel
 import android.app.Application
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
-import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.jinu.todoandmodes.roomdb.database.RoomData
 import com.jinu.todoandmodes.roomdb.dataclass.Category
@@ -16,8 +15,8 @@ import kotlinx.coroutines.launch
 class RoomViewModel(application: Application) : AndroidViewModel(application) {
 
 	private val repository: RoomRepository
-	private val allTask: LiveData<List<TaskData>>
-	private val allCategory: LiveData<List<Category>>
+	val allTask: LiveData<List<TaskData>>
+	val allCategory: LiveData<List<Category>>
 
 	init {
 		val database = RoomData.getDatabase(application).dao()

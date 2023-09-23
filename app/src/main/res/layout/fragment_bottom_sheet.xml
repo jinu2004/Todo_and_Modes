@@ -26,26 +26,42 @@
                 android:layout_height="match_parent">
 
                 <EditText
+                    android:id="@+id/text"
                     style="@style/Widget.Material3.TextInputEditText.OutlinedBox"
-                    android:layout_width="match_parent"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_margin="10dp"
                     android:autofillHints=""
                     android:hint="@string/tasks"
                     android:inputType="textShortMessage"
+                    android:singleLine="true"
+                    android:ellipsize="end"
                     android:textColorHint="#78909C"
                     android:textStyle="bold"
                     app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintEnd_toStartOf="@id/floating"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
+                    app:layout_constraintTop_toTopOf="parent"
+                    tools:ignore="VisualLintTextFieldSize" />
+
+                <com.google.android.material.floatingactionbutton.FloatingActionButton
+                    android:id="@+id/floating"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="20dp"
+                    android:contentDescription="@string/todo"
+                    android:src="@drawable/round_add_24"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    tools:ignore="DuplicateSpeakableTextCheck" />
             </androidx.constraintlayout.widget.ConstraintLayout>
 
         </com.google.android.material.card.MaterialCardView>
 
         <Spinner
-            android:id="@+id/_dynamic"
-            android:layout_width="wrap_content"
+            android:id="@+id/dynamic"
+            android:layout_width="110dp"
             android:layout_height="wrap_content"
             android:layout_margin="10dp"
             android:minHeight="48dp"
@@ -61,8 +77,8 @@
             android:layout_marginTop="15dp"
             android:layout_marginStart="10dp"
             android:src="@drawable/round_calendar_month_24"
-            app:layout_constraintBottom_toBottomOf="@+id/_dynamic"
-            app:layout_constraintStart_toEndOf="@id/_dynamic"
+            app:layout_constraintBottom_toBottomOf="@+id/dynamic"
+            app:layout_constraintStart_toEndOf="@id/dynamic"
             app:layout_constraintTop_toBottomOf="@id/materialCardView2"
             android:contentDescription="@string/todo" />
 
@@ -73,20 +89,23 @@
             android:layout_marginTop="15dp"
             android:layout_marginStart="20dp"
             android:src="@drawable/round_notifications_active_24"
-            app:layout_constraintBottom_toBottomOf="@+id/_dynamic"
+            app:layout_constraintBottom_toBottomOf="@+id/dynamic"
             app:layout_constraintStart_toEndOf="@id/pick_date_time"
             app:layout_constraintTop_toBottomOf="@id/materialCardView2"
             android:contentDescription="@string/todo" />
+
         <ImageView
+            android:id="@+id/repeat"
             android:layout_width="30dp"
             android:layout_height="30dp"
-            android:layout_marginTop="15dp"
             android:layout_marginStart="20dp"
+            android:layout_marginTop="15dp"
+            android:contentDescription="@string/todo"
             android:src="@drawable/baseline_event_repeat_24"
-            app:layout_constraintBottom_toBottomOf="@+id/_dynamic"
+            app:layout_constraintBottom_toBottomOf="@+id/dynamic"
             app:layout_constraintStart_toEndOf="@id/set_alarm"
-            app:layout_constraintTop_toBottomOf="@id/materialCardView2"
-            android:contentDescription="@string/todo" />
+            app:layout_constraintTop_toBottomOf="@id/materialCardView2" />
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 </FrameLayout>

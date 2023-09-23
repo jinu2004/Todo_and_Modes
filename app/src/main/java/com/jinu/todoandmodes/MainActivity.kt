@@ -3,6 +3,7 @@ package com.jinu.todoandmodes
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import com.jinu.todoandmodes.databinding.ActivityMainBinding
+import com.jinu.todoandmodes.recyclerview.BottomSheet
 
 class MainActivity : AppCompatActivity() {
 	private lateinit var binding: ActivityMainBinding
@@ -11,6 +12,10 @@ class MainActivity : AppCompatActivity() {
 		binding = ActivityMainBinding.inflate(layoutInflater)
 		setContentView(binding.root)
 
+		val bottomSheet = BottomSheet()
+		binding.addNewTask.setOnClickListener {
+			bottomSheet.show(supportFragmentManager,bottomSheet.tag)
+		}
 
 
 

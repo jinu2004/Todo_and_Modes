@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:background="?attr/colorSurface"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
     tools:context=".recyclerview.BottomSheet">
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
@@ -31,12 +31,13 @@
                     android:layout_margin="10dp"
                     android:autofillHints=""
                     android:hint="@string/tasks"
+                    android:inputType="textShortMessage"
+                    android:textColorHint="#78909C"
                     android:textStyle="bold"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    android:inputType="textShortMessage" />
+                    app:layout_constraintTop_toTopOf="parent" />
             </androidx.constraintlayout.widget.ConstraintLayout>
 
         </com.google.android.material.card.MaterialCardView>
@@ -47,8 +48,10 @@
             android:layout_height="wrap_content"
             android:layout_margin="10dp"
             android:minHeight="48dp"
+            android:spinnerMode="dialog"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/materialCardView2" />
+            app:layout_constraintTop_toBottomOf="@id/materialCardView2"
+            tools:listitem="@layout/task_group_select" />
 
         <ImageView
             android:id="@+id/pick_date_time"
@@ -63,13 +66,24 @@
             android:contentDescription="@string/todo" />
 
         <ImageView
+            android:id="@+id/set_alarm"
             android:layout_width="30dp"
             android:layout_height="30dp"
             android:layout_marginTop="15dp"
             android:layout_marginStart="20dp"
-            android:src="@drawable/round_playlist_add_24"
+            android:src="@drawable/round_notifications_active_24"
             app:layout_constraintBottom_toBottomOf="@+id/_dynamic"
             app:layout_constraintStart_toEndOf="@id/pick_date_time"
+            app:layout_constraintTop_toBottomOf="@id/materialCardView2"
+            android:contentDescription="@string/todo" />
+        <ImageView
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_marginTop="15dp"
+            android:layout_marginStart="20dp"
+            android:src="@drawable/baseline_event_repeat_24"
+            app:layout_constraintBottom_toBottomOf="@+id/_dynamic"
+            app:layout_constraintStart_toEndOf="@id/set_alarm"
             app:layout_constraintTop_toBottomOf="@id/materialCardView2"
             android:contentDescription="@string/todo" />
     </androidx.constraintlayout.widget.ConstraintLayout>

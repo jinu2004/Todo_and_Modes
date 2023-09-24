@@ -2,19 +2,19 @@ package com.jinu.todoandmodes.recyclerview
 
 import android.content.Context
 import android.content.res.Configuration
-import android.content.res.Resources.Theme
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import androidx.compose.ui.graphics.Color
 import androidx.recyclerview.widget.RecyclerView
 import com.jinu.todoandmodes.R
 import com.jinu.todoandmodes.databinding.ChipRecyclerViewItemBinding
+import com.jinu.todoandmodes.roomdb.dataclass.Category
 
-class ChipAdapter(private val list: List<String>) : RecyclerView.Adapter<ChipAdapter.ViewHolder>() {
+class ChipAdapter(private val list: List<Category>) : RecyclerView.Adapter<ChipAdapter.ViewHolder>() {
 	private var selectedItemPosition = 0
 
 	inner class ViewHolder(val binding: ChipRecyclerViewItemBinding) :
 		RecyclerView.ViewHolder(binding.root)
+	private var onClickListener:OnClickListener?=null
 
 	override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
 		val view = ChipRecyclerViewItemBinding.inflate(LayoutInflater.from(parent.context))
@@ -27,8 +27,11 @@ class ChipAdapter(private val list: List<String>) : RecyclerView.Adapter<ChipAda
 
 
 	override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-		holder.binding.chip.text = list[position]
+		holder.binding.chip.text = list[position].heading
 		holder.binding.chip.setOnClickListener {
+			if (onClickListener != null) {
+				onClickListener!!.onClick(position)
+			}
 			val previousSelectedItem = selectedItemPosition
 			selectedItemPosition = holder.adapterPosition
 			notifyItemChanged(previousSelectedItem)
@@ -48,5 +51,12 @@ class ChipAdapter(private val list: List<String>) : RecyclerView.Adapter<ChipAda
 		val currentNightMode =
 			context.resources.configuration.uiMode and Configuration.UI_MODE_NIGHT_MASK
 		return currentNightMode == Configuration.UI_MODE_NIGHT_YES
+	}
+	fun setOnclickListener(onClickListener:OnClickListener){
+		this.onClickListener = onClickListener
+	}
+	interface OnClickListener {
+		fun onClick(position: Int)
+
 	}
 }

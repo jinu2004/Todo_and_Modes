@@ -32,9 +32,15 @@ class RoomViewModel(application: Application) : AndroidViewModel(application) {
 	fun getByCategoryID(categoryId: Int): LiveData<List<TaskData>> {
 		return repository.getByCategoryID(categoryId)
 	}
+	fun getCountByCategory(categoryId:Int):Int{
+		return repository.getCountByCategory(categoryId)
+	}
 
 	fun getAllStep(mainTaskId: Int): LiveData<List<StepTask>> {
 		return repository.getAllStep(mainTaskId)
+	}
+	fun getByID(primaryKey:Int):TaskData{
+		return repository.getByID(primaryKey)
 	}
 
 	fun addNewTask(task: TaskData) {

@@ -70,4 +70,18 @@ dependencies {
 	implementation("androidx.lifecycle:lifecycle-runtime-compose:$lifecycle_version")
 	implementation("androidx.lifecycle:lifecycle-viewmodel-savedstate:$lifecycle_version")
 
+	val nav_version = "2.3.5"
+	//noinspection GradleDependency
+	implementation("androidx.navigation:navigation-fragment-ktx:$nav_version")
+	//noinspection GradleDependency
+	implementation("androidx.navigation:navigation-ui-ktx:$nav_version")
+
+	// Feature module Support
+	//noinspection GradleDependency
+	implementation("androidx.navigation:navigation-dynamic-features-fragment:$nav_version")
+
+	// Testing Navigation
+	//noinspection GradleDependency
+	androidTestImplementation("androidx.navigation:navigation-testing:$nav_version")
+
 }

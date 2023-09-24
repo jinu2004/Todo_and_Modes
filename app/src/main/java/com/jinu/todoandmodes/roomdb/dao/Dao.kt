@@ -19,9 +19,18 @@ interface Dao {
 
 	@Query("SELECT*FROM TaskTable WHERE categoryId LIKE:categoryId")
 	fun getByCategoryID(categoryId:Int):LiveData<List<TaskData>>
+	@Query("SELECT*FROM TaskTable WHERE primaryKey LIKE:primaryKey")
+	fun getByID(primaryKey:Int):TaskData
 
 	@Query("SELECT*FROM TaskTable WHERE taskStatus LIKE:status")
 	fun getListByStatus(status:Boolean):LiveData<List<TaskData>>
+
+	@Query("SELECT*FROM StepTable WHERE id LIKE:mainTaskId")
+	fun getAllStep(mainTaskId:Int):LiveData<List<StepTask>>
+
+	@Query("SELECT COUNT(*) FROM TaskTable WHERE categoryId = :categoryId")
+	fun getCountByCategory(categoryId:Int):Int
+
 
 	@Insert(onConflict = OnConflictStrategy.REPLACE)
 	suspend fun addNewTask(taskData: TaskData)
@@ -31,8 +40,6 @@ interface Dao {
 	@Insert(onConflict = OnConflictStrategy.IGNORE)
 	suspend fun addSub(stepTask: StepTask)
 
-	@Query("SELECT*FROM StepTable WHERE id LIKE:mainTaskId")
-	fun getAllStep(mainTaskId:Int):LiveData<List<StepTask>>
 
 
 }

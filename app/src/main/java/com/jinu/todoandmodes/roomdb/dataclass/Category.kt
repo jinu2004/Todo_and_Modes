@@ -6,6 +6,6 @@ import androidx.room.PrimaryKey
 @Entity("category")
 data class Category(
 	@PrimaryKey
-	val primaryKey:Int,
-	val icon:Int,
-	val heading:String)
+	val primaryKey:Int?=null,
+	val icon:Int?=null,
+	val heading:String?=null)

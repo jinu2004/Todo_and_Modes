@@ -14,9 +14,17 @@ class RoomRepository(private val dao: Dao) {
 		return dao.getListByStatus(status)
 	}
 
+
 	fun getByCategoryID(categoryId:Int):LiveData<List<TaskData>>{
 		return dao.getByCategoryID(categoryId)
 	}
+	fun getByID(primaryKey:Int):TaskData{
+		return dao.getByID(primaryKey)
+	}
+	fun getCountByCategory(categoryId:Int):Int{
+		return dao.getCountByCategory(categoryId)
+	}
+
 	fun getAllStep(mainTaskId:Int):LiveData<List<StepTask>>{
 		return dao.getAllStep(mainTaskId)
 	}

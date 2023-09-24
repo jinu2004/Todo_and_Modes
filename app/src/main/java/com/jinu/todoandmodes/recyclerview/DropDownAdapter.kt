@@ -23,7 +23,7 @@ class DropDownAdapter(
 		val item = getItem(position)
 
 		binding.textview.text = item?.heading
-		binding.imageView.setImageResource(item!!.icon)
+		binding.imageView.setImageResource(item?.icon!!)
 
 		return binding.root
 	}

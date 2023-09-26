@@ -26,6 +26,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
+            android:layout_margin="10dp"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="1.0"
@@ -34,10 +35,13 @@
             tools:listitem="@layout/chip_recycler_view_item" />
 
         <androidx.recyclerview.widget.RecyclerView
+            android:fadeScrollbars="true"
             android:id="@+id/list_task"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
+            android:layout_marginStart="10dp"
+            android:layout_marginEnd="10dp"
             app:layout_constraintEnd_toEndOf="parent"
             tools:listitem="@layout/task_recyclerview_item_view"
             app:layout_constraintStart_toStartOf="parent"

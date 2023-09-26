@@ -37,4 +37,7 @@ class RoomRepository(private val dao: Dao) {
 	suspend fun addSub(stepTask: StepTask){
 		dao.addSub(stepTask)
 	}
+	suspend fun updateTask(taskData: TaskData){
+		dao.updateTask(taskData)
+	}
 }

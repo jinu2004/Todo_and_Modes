@@ -5,20 +5,29 @@ import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
+import androidx.room.Update
 import com.jinu.todoandmodes.roomdb.dataclass.Category
 import com.jinu.todoandmodes.roomdb.dataclass.StepTask
 import com.jinu.todoandmodes.roomdb.dataclass.TaskData
 
 @Dao
 interface Dao {
-	@Query("SELECT*FROM TaskTable")
+	@Query("SELECT*FROM TaskTable WHERE taskStatus == 0")
 	fun allTask():LiveData<List<TaskData>>
+	@Query("SELECT*FROM TaskTable WHERE taskStatus == 1")
+	fun allTaskDone():LiveData<List<TaskData>>
 	@Query("SELECT*FROM category")
 	fun allCategory():LiveData<List<Category>>
 
+	@Query("select count(*) from TaskTable")
+	fun count():Int
 
-	@Query("SELECT*FROM TaskTable WHERE categoryId LIKE:categoryId")
+
+	@Query("SELECT*FROM TaskTable WHERE categoryId LIKE:categoryId and taskStatus == 0")
 	fun getByCategoryID(categoryId:Int):LiveData<List<TaskData>>
+	@Query("SELECT*FROM TaskTable WHERE categoryId LIKE:categoryId and taskStatus == 1")
+	fun getByCategoryIDDone(categoryId:Int):LiveData<List<TaskData>>
+
 	@Query("SELECT*FROM TaskTable WHERE primaryKey LIKE:primaryKey")
 	fun getByID(primaryKey:Int):TaskData
 
@@ -34,6 +43,9 @@ interface Dao {
 
 	@Insert(onConflict = OnConflictStrategy.REPLACE)
 	suspend fun addNewTask(taskData: TaskData)
+
+	@Update(onConflict = OnConflictStrategy.REPLACE)
+	suspend fun updateTask(taskData: TaskData)
 
 	@Insert(onConflict = OnConflictStrategy.REPLACE)
 	suspend fun addNewCategory(category: Category)

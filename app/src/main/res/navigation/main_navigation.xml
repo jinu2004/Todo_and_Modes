@@ -3,24 +3,18 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/main_navigation"
-    app:startDestination="@id/taskView">
+    app:startDestination="@id/home_fragment">
 
     <fragment
-        android:id="@+id/taskView"
+        android:id="@+id/home_fragment"
         android:name="com.jinu.todoandmodes.TaskView"
         android:label="fragment_task_view"
         tools:layout="@layout/fragment_task_view" >
-        <action
-            android:id="@+id/action_taskView_to_toDoListView"
-            app:destination="@id/toDoListView" />
     </fragment>
     <fragment
-        android:id="@+id/toDoListView"
+        android:id="@+id/task_fragment"
         android:name="com.jinu.todoandmodes.ToDoListView"
         android:label="fragment_to_do_list"
         tools:layout="@layout/fragment_to_do_list" >
-        <action
-            android:id="@+id/action_toDoListView_to_taskView"
-            app:destination="@id/taskView" />
     </fragment>
 </navigation>

@@ -56,4 +56,5 @@ class RoomViewModel(application: Application) : AndroidViewModel(application) {
 	fun addSub(stepTask: StepTask) {
 		viewModelScope.launch(Dispatchers.IO) { repository.addSub(stepTask) }
 	}
+	fun updateTask(taskData: TaskData){viewModelScope.launch(Dispatchers.IO) { repository.updateTask(taskData) }}
 }

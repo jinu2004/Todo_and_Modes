@@ -5,10 +5,13 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".ToDoListView">
-
+<ScrollView
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:ignore="UselessParent">
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="wrap_content">
 
         <com.google.android.material.appbar.MaterialToolbar
             android:id="@+id/materialToolbar2"
@@ -35,19 +38,23 @@
             tools:listitem="@layout/chip_recycler_view_item" />
 
         <androidx.recyclerview.widget.RecyclerView
-            android:fadeScrollbars="true"
             android:id="@+id/list_task"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
             android:layout_marginStart="10dp"
+            android:layout_marginTop="10dp"
             android:layout_marginEnd="10dp"
+            android:layout_marginBottom="20dp"
+            android:fadeScrollbars="true"
+            android:scrollbars="vertical"
             app:layout_constraintEnd_toEndOf="parent"
-            tools:listitem="@layout/task_recyclerview_item_view"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/recycler" />
+            app:layout_constraintTop_toBottomOf="@+id/recycler"
+            tools:listitem="@layout/task_recyclerview_item_view" />
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>
+</ScrollView>
+
 
 </FrameLayout>

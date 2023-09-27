@@ -16,6 +16,7 @@ class RoomViewModel(application: Application) : AndroidViewModel(application) {
 
 	private val repository: RoomRepository
 	val allTask: LiveData<List<TaskData>>
+	val allTaskToDane : LiveData<List<TaskData>>
 	val allCategory: LiveData<List<Category>>
 
 	init {
@@ -23,6 +24,7 @@ class RoomViewModel(application: Application) : AndroidViewModel(application) {
 		repository = RoomRepository(database)
 		allCategory = repository.allCategory
 		allTask = repository.allTask
+		allTaskToDane = repository.allTaskToDone
 	}
 
 	fun getListByStatus(status: Boolean): LiveData<List<TaskData>> {

@@ -59,7 +59,7 @@
                         tools:ignore="HardcodedText" />
 
                     <TextView
-                        android:id="@+id/textView"
+                        android:id="@+id/addressing_text"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="almost Done!!"
@@ -85,17 +85,14 @@
                         android:id="@+id/circularProgressIndicator"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:longClickable="false"
                         android:max="100"
-                        android:outlineProvider="bounds"
-                        android:pointerIcon="cell"
                         android:progress="80"
-                        app:indicatorDirectionCircular="counterclockwise"
+                        app:indicatorDirectionCircular="clockwise"
                         app:indicatorSize="90dp"
                         app:layout_constraintBottom_toBottomOf="@+id/button"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toEndOf="@+id/button"
-                        app:layout_constraintTop_toBottomOf="@+id/textView"
+                        app:layout_constraintTop_toBottomOf="@+id/addressing_text"
                         app:trackCornerRadius="100dp"
                         app:trackThickness="8dp" />
 
@@ -119,6 +116,7 @@
 
 
                     <TextView
+                        android:id="@+id/percent_text"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/_80"

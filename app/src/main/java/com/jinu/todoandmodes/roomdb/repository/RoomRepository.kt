@@ -8,6 +8,7 @@ import com.jinu.todoandmodes.roomdb.dataclass.TaskData
 
 class RoomRepository(private val dao: Dao) {
 	val allTask:LiveData<List<TaskData>> = dao.allTask()
+	val allTaskToDone:LiveData<List<TaskData>> = dao.allTaskDone()
 	val allCategory:LiveData<List<Category>> =dao.allCategory()
 
 	fun getListByStatus(status:Boolean):LiveData<List<TaskData>>{

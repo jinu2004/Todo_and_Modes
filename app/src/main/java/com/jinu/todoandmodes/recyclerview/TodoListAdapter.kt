@@ -30,6 +30,7 @@ class TodoListAdapter(private val list: List<TaskData>) :
 		val data = list[position]
 		holder.binding.dueTime.text = formatMillisecondsToDate(data.dueDate!!)
 		holder.binding.check.text = data.taskName
+		holder.binding.check.isChecked = data.taskStatus!!
 		holder.binding.check.setOnCheckedChangeListener{_,checked->
 				onCheckedStateChangeListener?.onCheck(position, status = checked)
 		}

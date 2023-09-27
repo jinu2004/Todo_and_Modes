@@ -12,9 +12,9 @@ import com.jinu.todoandmodes.roomdb.dataclass.TaskData
 
 @Dao
 interface Dao {
-	@Query("SELECT*FROM TaskTable WHERE taskStatus == 0")
+	@Query("SELECT*FROM TaskTable")
 	fun allTask():LiveData<List<TaskData>>
-	@Query("SELECT*FROM TaskTable WHERE taskStatus == 1")
+	@Query("SELECT*FROM TaskTable WHERE taskStatus == 0")
 	fun allTaskDone():LiveData<List<TaskData>>
 	@Query("SELECT*FROM category")
 	fun allCategory():LiveData<List<Category>>
@@ -23,8 +23,8 @@ interface Dao {
 	fun count():Int
 
 
-	@Query("SELECT*FROM TaskTable WHERE categoryId LIKE:categoryId and taskStatus == 0")
-	fun getByCategoryID(categoryId:Int):LiveData<List<TaskData>>
+	@Query("SELECT*FROM TaskTable WHERE categoryId LIKE:categoryId")
+	fun getByCategoryID(categoryId:Int):LiveData<TaskData>
 	@Query("SELECT*FROM TaskTable WHERE categoryId LIKE:categoryId and taskStatus == 1")
 	fun getByCategoryIDDone(categoryId:Int):LiveData<List<TaskData>>
 
@@ -44,7 +44,7 @@ interface Dao {
 	@Insert(onConflict = OnConflictStrategy.REPLACE)
 	suspend fun addNewTask(taskData: TaskData)
 
-	@Update(onConflict = OnConflictStrategy.REPLACE)
+	@Update
 	suspend fun updateTask(taskData: TaskData)
 
 	@Insert(onConflict = OnConflictStrategy.REPLACE)

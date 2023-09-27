@@ -24,7 +24,7 @@ interface Dao {
 
 
 	@Query("SELECT*FROM TaskTable WHERE categoryId LIKE:categoryId")
-	fun getByCategoryID(categoryId:Int):LiveData<TaskData>
+	fun getByCategoryID(categoryId:Int):LiveData<List<TaskData>>
 	@Query("SELECT*FROM TaskTable WHERE categoryId LIKE:categoryId and taskStatus == 1")
 	fun getByCategoryIDDone(categoryId:Int):LiveData<List<TaskData>>
 

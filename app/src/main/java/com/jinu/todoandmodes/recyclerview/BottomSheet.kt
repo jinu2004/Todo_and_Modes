@@ -40,7 +40,7 @@ class BottomSheet : BottomSheetDialogFragment() {
 		roomViewModel = ViewModelProvider(this)[RoomViewModel::class.java]
 		binding2 = TaskGroupSelectBinding.inflate(layoutInflater)
 
-
+		datePickerData = MaterialDatePicker.todayInUtcMilliseconds()
 		roomViewModel.allCategory.observe(this) {
 			val dropDownAdapter = DropDownAdapter(requireContext(),binding2.root.id, it)
 			binding.dynamic.adapter = dropDownAdapter
@@ -68,7 +68,7 @@ class BottomSheet : BottomSheetDialogFragment() {
 		binding.floating.setOnClickListener {
 			val text = binding.text.text.toString()
 
-			if (text.isNotEmpty() && datePickerData != null && timePickerData != null){
+			if (text.isNotEmpty() && datePickerData != null){
 				roomViewModel.addNewTask(
 					TaskData(
 						null,
@@ -76,8 +76,8 @@ class BottomSheet : BottomSheetDialogFragment() {
 						startDate,
 						datePickerData,
 						timePickerData,
-						false,
-						false,
+						taskStatus = false,
+						notifyEnable = false,
 						0,
 						false,
 						"",
@@ -129,7 +129,6 @@ class BottomSheet : BottomSheetDialogFragment() {
 		datePicker.show(childFragmentManager, "")
 		datePicker.addOnPositiveButtonClickListener {
 			datePickerData = it
-
 		}
 
 	}

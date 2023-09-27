@@ -31,13 +31,12 @@ class MainActivity : AppCompatActivity() {
 		roomViewModel = ViewModelProvider(this)[RoomViewModel::class.java]
 		val list = arrayListOf<Category>()
 		list.add(Category(0, R.drawable.briefcase_svgrepo_com, "office"))
-		list.add(Category(1, R.drawable.round_notifications_active_24, "notification"))
+		list.add(Category(1, R.drawable.baseline_school_24, "school"))
 		list.add(Category(2, R.drawable.round_person_24, "personal"))
 		list.forEach {
 			roomViewModel.addNewCategory(it)
 		}
 
 	}
-
 
 }

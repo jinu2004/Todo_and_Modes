@@ -28,7 +28,8 @@ class InProgressAdapter(private val list: List<TaskData>, private val roomViewMo
 		holder.binding.category.text = data.category
 		roomViewModel.allCategory.observeForever { it ->
 			val category = it.filter { it.primaryKey == data.primaryKey }
-			holder.binding.icon.setImageResource(category.first().icon!!)
+			if (category.isNotEmpty())
+				holder.binding.icon.setImageResource(category.first().icon!!)
 		}
 		roomViewModel.getAllStep(data.primaryKey!!).observeForever{ it ->
 			val filterForProgress = it.filter { it.state }

@@ -7,10 +7,10 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.jinu.todoandmodes.R
 import com.jinu.todoandmodes.databinding.ChipRecyclerViewItemBinding
-import com.jinu.todoandmodes.roomdb.dataclass.Category
+import com.jinu.todoandmodes.mvvm.dataclass.Category
 
 class ChipAdapter(private val list: List<Category>) : RecyclerView.Adapter<ChipAdapter.ViewHolder>() {
-	private var selectedItemPosition = 0
+	 var selectedItemPosition = 0
 
 	inner class ViewHolder(val binding: ChipRecyclerViewItemBinding) :
 		RecyclerView.ViewHolder(binding.root)

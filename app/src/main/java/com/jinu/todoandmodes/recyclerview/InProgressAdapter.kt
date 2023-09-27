@@ -4,8 +4,8 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.jinu.todoandmodes.databinding.InProgressViewBinding
-import com.jinu.todoandmodes.roomdb.dataclass.TaskData
-import com.jinu.todoandmodes.roomdb.viewmodel.RoomViewModel
+import com.jinu.todoandmodes.mvvm.dataclass.TaskData
+import com.jinu.todoandmodes.mvvm.viewmodel.RoomViewModel
 
 class InProgressAdapter(private val list: List<TaskData>, private val roomViewModel: RoomViewModel) :
 	RecyclerView.Adapter<InProgressAdapter.ViewHolder>() {

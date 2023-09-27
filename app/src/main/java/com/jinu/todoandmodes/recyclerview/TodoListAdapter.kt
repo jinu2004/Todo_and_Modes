@@ -5,7 +5,7 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.jinu.todoandmodes.databinding.TaskRecyclerviewItemViewBinding
-import com.jinu.todoandmodes.roomdb.dataclass.TaskData
+import com.jinu.todoandmodes.mvvm.dataclass.TaskData
 import java.time.Instant
 import java.time.ZoneId
 import java.time.format.DateTimeFormatter

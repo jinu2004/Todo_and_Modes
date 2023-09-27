@@ -17,8 +17,8 @@ import com.google.android.material.timepicker.TimeFormat
 import com.jinu.todoandmodes.R
 import com.jinu.todoandmodes.databinding.FragmentBottomSheetBinding
 import com.jinu.todoandmodes.databinding.TaskGroupSelectBinding
-import com.jinu.todoandmodes.roomdb.dataclass.TaskData
-import com.jinu.todoandmodes.roomdb.viewmodel.RoomViewModel
+import com.jinu.todoandmodes.mvvm.dataclass.TaskData
+import com.jinu.todoandmodes.mvvm.viewmodel.RoomViewModel
 
 @Suppress("NAME_SHADOWING")
 class BottomSheet : BottomSheetDialogFragment() {

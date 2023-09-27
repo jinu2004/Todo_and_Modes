@@ -1,14 +1,14 @@
-package com.jinu.todoandmodes.roomdb.viewmodel
+package com.jinu.todoandmodes.mvvm.viewmodel
 
 import android.app.Application
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.viewModelScope
-import com.jinu.todoandmodes.roomdb.database.RoomData
-import com.jinu.todoandmodes.roomdb.dataclass.Category
-import com.jinu.todoandmodes.roomdb.dataclass.StepTask
-import com.jinu.todoandmodes.roomdb.dataclass.TaskData
-import com.jinu.todoandmodes.roomdb.repository.RoomRepository
+import com.jinu.todoandmodes.mvvm.database.RoomData
+import com.jinu.todoandmodes.mvvm.dataclass.Category
+import com.jinu.todoandmodes.mvvm.dataclass.StepTask
+import com.jinu.todoandmodes.mvvm.dataclass.TaskData
+import com.jinu.todoandmodes.mvvm.repository.RoomRepository
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 

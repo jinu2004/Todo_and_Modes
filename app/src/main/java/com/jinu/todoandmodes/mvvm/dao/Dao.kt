@@ -1,4 +1,4 @@
-package com.jinu.todoandmodes.roomdb.dao
+package com.jinu.todoandmodes.mvvm.dao
 
 import androidx.lifecycle.LiveData
 import androidx.room.Dao
@@ -6,9 +6,9 @@ import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import androidx.room.Update
-import com.jinu.todoandmodes.roomdb.dataclass.Category
-import com.jinu.todoandmodes.roomdb.dataclass.StepTask
-import com.jinu.todoandmodes.roomdb.dataclass.TaskData
+import com.jinu.todoandmodes.mvvm.dataclass.Category
+import com.jinu.todoandmodes.mvvm.dataclass.StepTask
+import com.jinu.todoandmodes.mvvm.dataclass.TaskData
 
 @Dao
 interface Dao {

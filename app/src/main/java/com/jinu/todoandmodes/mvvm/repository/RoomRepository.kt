@@ -1,10 +1,10 @@
-package com.jinu.todoandmodes.roomdb.repository
+package com.jinu.todoandmodes.mvvm.repository
 
 import androidx.lifecycle.LiveData
-import com.jinu.todoandmodes.roomdb.dao.Dao
-import com.jinu.todoandmodes.roomdb.dataclass.Category
-import com.jinu.todoandmodes.roomdb.dataclass.StepTask
-import com.jinu.todoandmodes.roomdb.dataclass.TaskData
+import com.jinu.todoandmodes.mvvm.dao.Dao
+import com.jinu.todoandmodes.mvvm.dataclass.Category
+import com.jinu.todoandmodes.mvvm.dataclass.StepTask
+import com.jinu.todoandmodes.mvvm.dataclass.TaskData
 
 class RoomRepository(private val dao: Dao) {
 	val allTask:LiveData<List<TaskData>> = dao.allTask()

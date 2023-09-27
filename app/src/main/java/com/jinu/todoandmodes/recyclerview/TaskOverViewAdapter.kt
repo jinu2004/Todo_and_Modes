@@ -6,13 +6,14 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.datepicker.MaterialDatePicker
 import com.jinu.todoandmodes.databinding.TaskGroupLayoutBinding
-import com.jinu.todoandmodes.roomdb.dataclass.Category
-import com.jinu.todoandmodes.roomdb.viewmodel.RoomViewModel
+import com.jinu.todoandmodes.mvvm.dataclass.Category
+import com.jinu.todoandmodes.mvvm.viewmodel.RoomViewModel
 
 class TaskOverViewAdapter(val list: List<Category>, private val roomViewModel: RoomViewModel) :
 	RecyclerView.Adapter<TaskOverViewAdapter.ViewHolder>() {
 	inner class ViewHolder(val binding: TaskGroupLayoutBinding) :
 		RecyclerView.ViewHolder(binding.root)
+	private var onClickListener: OnClickListener?=null
 
 	override fun onCreateViewHolder(
 		parent: ViewGroup,
@@ -37,13 +38,26 @@ class TaskOverViewAdapter(val list: List<Category>, private val roomViewModel: R
 			val percentage = (filterForPer.size.toDouble() / filteredCategory.size) * 100
 			holder.binding.count.text = "${filter.size} Tasks"
 			holder.binding.groupProgress.progress = percentage.toInt()
-			holder.binding.progressCount.text = percentage.toInt().toString()
+			holder.binding.progressCount.text = "${percentage.toInt()}%"
 
+		}
+		holder.binding.body.setOnClickListener {
+			if (onClickListener != null) {
+				onClickListener!!.onClick(position)
+			}
 		}
 	}
 
 	override fun getItemCount(): Int {
 		return list.size
+	}
+
+	fun setOnclickListener(onClickListener:OnClickListener){
+		this.onClickListener = onClickListener
+	}
+	interface OnClickListener {
+		fun onClick(position: Int)
+
 	}
 
 

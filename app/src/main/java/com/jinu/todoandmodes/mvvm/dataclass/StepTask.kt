@@ -1,4 +1,4 @@
-package com.jinu.todoandmodes.roomdb.dataclass
+package com.jinu.todoandmodes.mvvm.dataclass
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey

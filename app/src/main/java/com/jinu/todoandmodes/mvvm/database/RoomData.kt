@@ -1,13 +1,13 @@
-package com.jinu.todoandmodes.roomdb.database
+package com.jinu.todoandmodes.mvvm.database
 
 import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
-import com.jinu.todoandmodes.roomdb.dao.Dao
-import com.jinu.todoandmodes.roomdb.dataclass.Category
-import com.jinu.todoandmodes.roomdb.dataclass.StepTask
-import com.jinu.todoandmodes.roomdb.dataclass.TaskData
+import com.jinu.todoandmodes.mvvm.dao.Dao
+import com.jinu.todoandmodes.mvvm.dataclass.Category
+import com.jinu.todoandmodes.mvvm.dataclass.StepTask
+import com.jinu.todoandmodes.mvvm.dataclass.TaskData
 
 @Database(
 	entities = [Category::class, TaskData::class, StepTask::class],

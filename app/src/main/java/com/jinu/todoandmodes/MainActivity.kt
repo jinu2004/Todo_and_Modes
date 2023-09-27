@@ -7,9 +7,9 @@ import androidx.navigation.findNavController
 import androidx.navigation.ui.setupWithNavController
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.jinu.todoandmodes.databinding.ActivityMainBinding
+import com.jinu.todoandmodes.mvvm.dataclass.Category
+import com.jinu.todoandmodes.mvvm.viewmodel.RoomViewModel
 import com.jinu.todoandmodes.recyclerview.BottomSheet
-import com.jinu.todoandmodes.roomdb.dataclass.Category
-import com.jinu.todoandmodes.roomdb.viewmodel.RoomViewModel
 
 class MainActivity : AppCompatActivity() {
 	private lateinit var binding: ActivityMainBinding

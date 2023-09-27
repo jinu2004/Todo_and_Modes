@@ -7,7 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ArrayAdapter
 import com.jinu.todoandmodes.databinding.TaskGroupSelectBinding
-import com.jinu.todoandmodes.roomdb.dataclass.Category
+import com.jinu.todoandmodes.mvvm.dataclass.Category
 
 class DropDownAdapter(
 	context: Context,

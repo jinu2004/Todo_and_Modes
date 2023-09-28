@@ -45,7 +45,7 @@ class TaskView : Fragment() {
 			if (filter.isNotEmpty()) binding.percentText.text = " ${percentage.toInt()}%"
 			binding.circularProgressIndicator.progress = percentage.toInt()
 			if (percentage == 0.0) binding.addressingText.text = "You have to complete tasks!!"
-			else if (percentage > 0 && percentage < 50) binding.addressingText.text = "keep it up!!"
+			else if (percentage> 0 && percentage < 50) binding.addressingText.text = "keep it up!!"
 			else if (percentage > 50 && percentage < 80) binding.addressingText.text =
 				"you have to do a little more"
 			else if (percentage.toInt() == 100) binding.addressingText.text = "Congratulation"
@@ -82,9 +82,6 @@ class TaskView : Fragment() {
 			view?.findNavController()
 				?.navigate(R.id.action_home_fragment_to_task_fragment)
 		}
-
-
-
 
 		return binding.root
 	}

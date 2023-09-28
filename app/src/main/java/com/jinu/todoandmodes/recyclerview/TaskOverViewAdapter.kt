@@ -41,7 +41,7 @@ class TaskOverViewAdapter(val list: List<Category>, private val roomViewModel: R
 			holder.binding.progressCount.text = "${percentage.toInt()}%"
 
 		}
-		holder.binding.body.setOnClickListener {
+		holder.binding.card.setOnClickListener {
 			if (onClickListener != null) {
 				onClickListener!!.onClick(position)
 			}

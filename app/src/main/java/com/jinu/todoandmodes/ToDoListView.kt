@@ -67,7 +67,6 @@ class ToDoListView : Fragment() {
 				}
 			} else {
 				roomViewModel.allTaskToDane.observe(viewLifecycleOwner) { data ->
-					if (current != null) {
 						val dataPro =
 							data.filter { it.category == categoryList[current + 1].heading }
 						val toAdapter = TodoListAdapter(dataPro)
@@ -82,7 +81,7 @@ class ToDoListView : Fragment() {
 							}
 
 						})
-					}
+
 				}
 			}
 

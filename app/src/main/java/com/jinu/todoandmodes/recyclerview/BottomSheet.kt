@@ -2,11 +2,17 @@ package com.jinu.todoandmodes.recyclerview
 
 import android.annotation.SuppressLint
 import android.app.AlertDialog
+import android.content.Context
+import android.content.res.Configuration
+import android.graphics.Color
+import android.graphics.PorterDuff
+import android.graphics.PorterDuffColorFilter
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.inputmethod.InputMethodManager
 import android.widget.AdapterView
 import android.widget.Toast
 import androidx.lifecycle.ViewModelProvider
@@ -39,8 +45,39 @@ class BottomSheet : BottomSheetDialogFragment() {
 		binding = FragmentBottomSheetBinding.inflate(inflater, container, false)
 		roomViewModel = ViewModelProvider(this)[RoomViewModel::class.java]
 		binding2 = TaskGroupSelectBinding.inflate(layoutInflater)
-
 		datePickerData = MaterialDatePicker.todayInUtcMilliseconds()
+
+
+
+
+		if (isDarkMode(requireContext())){
+			val color = Color.parseColor("#E1E3E0") // Replace with your desired color
+			val mode = PorterDuff.Mode.SRC_ATOP
+			val colorFilter = PorterDuffColorFilter(color, mode)
+			binding.pickDateTime.colorFilter = colorFilter
+			binding.setAlarm.colorFilter = colorFilter
+			binding.repeat.colorFilter = colorFilter
+		}
+
+		else{
+			val color = Color.parseColor("#191C1B") // Replace with your desired color
+			val mode = PorterDuff.Mode.SRC_ATOP
+			val colorFilter = PorterDuffColorFilter(color, mode)
+			binding.pickDateTime.colorFilter = colorFilter
+			binding.setAlarm.colorFilter = colorFilter
+			binding.repeat.colorFilter = colorFilter
+		}
+
+		binding.text.post {
+			binding.text.requestFocus()
+			val imm = binding.text.context.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+			imm.showSoftInput(binding.text, InputMethodManager.SHOW_IMPLICIT)
+			binding.text.selectAll()
+		}
+
+
+
+
 		roomViewModel.allCategory.observe(this) {
 			val dropDownAdapter = DropDownAdapter(requireContext(),binding2.root.id, it)
 			binding.dynamic.adapter = dropDownAdapter
@@ -150,4 +187,10 @@ class BottomSheet : BottomSheetDialogFragment() {
 			timePickerData = (hoursInMilliseconds + minutesInMilliseconds).toLong()
 		}
 	}
+	private fun isDarkMode(context: Context): Boolean {
+		val currentNightMode =
+			context.resources.configuration.uiMode and Configuration.UI_MODE_NIGHT_MASK
+		return currentNightMode == Configuration.UI_MODE_NIGHT_YES
+	}
+
 }

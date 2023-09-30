@@ -41,8 +41,12 @@ class RoomViewModel(application: Application) : AndroidViewModel(application) {
 	fun getAllStep(mainTaskId: Int): LiveData<List<StepTask>> {
 		return repository.getAllStep(mainTaskId)
 	}
-	fun getByID(primaryKey:Int):TaskData{
-		return repository.getByID(primaryKey)
+	fun getByID(primaryKey:Int):TaskData?{
+		var data:TaskData?=null
+		viewModelScope.launch(Dispatchers.IO) {
+		 data = repository.getByID(primaryKey)
+		}
+		return data
 	}
 
 	fun addNewTask(task: TaskData) {
@@ -58,5 +62,7 @@ class RoomViewModel(application: Application) : AndroidViewModel(application) {
 	fun addSub(stepTask: StepTask) {
 		viewModelScope.launch(Dispatchers.IO) { repository.addSub(stepTask) }
 	}
-	fun updateTask(taskData: TaskData){viewModelScope.launch(Dispatchers.IO) { repository.updateTask(taskData) }}
+	fun updateTask(taskData: TaskData) = viewModelScope.launch(Dispatchers.IO) { repository.updateTask(taskData) }
+
+	fun deleteStep(stepTask: StepTask) = viewModelScope.launch(Dispatchers.IO) { repository.deleteStep(stepTask)}
 }

@@ -19,7 +19,7 @@ class RoomRepository(private val dao: Dao) {
 	fun getByCategoryID(categoryId:Int):LiveData<List<TaskData>>{
 		return dao.getByCategoryID(categoryId)
 	}
-	fun getByID(primaryKey:Int):TaskData{
+	suspend fun getByID(primaryKey:Int):TaskData{
 		return dao.getByID(primaryKey)
 	}
 	fun getCountByCategory(categoryId:Int):Int{
@@ -40,5 +40,8 @@ class RoomRepository(private val dao: Dao) {
 	}
 	suspend fun updateTask(taskData: TaskData){
 		dao.updateTask(taskData)
+	}
+	suspend fun deleteStep(stepTask: StepTask){
+		dao.deleteStep(stepTask)
 	}
 }

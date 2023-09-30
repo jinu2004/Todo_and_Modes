@@ -6,7 +6,7 @@ import androidx.room.PrimaryKey
 @Entity("StepTable")
 data class StepTask(
 	@PrimaryKey
-	val primaryKey:Int,
-	val id:Int,
-	val text:String,
-	val state:Boolean)
+	val primaryKey: Int?,
+	val id: Int?,
+	var text: String?,
+	var state:Boolean)

@@ -2,6 +2,7 @@ package com.jinu.todoandmodes.mvvm.dao
 
 import androidx.lifecycle.LiveData
 import androidx.room.Dao
+import androidx.room.Delete
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
@@ -29,7 +30,7 @@ interface Dao {
 	fun getByCategoryIDDone(categoryId:Int):LiveData<List<TaskData>>
 
 	@Query("SELECT*FROM TaskTable WHERE primaryKey LIKE:primaryKey")
-	fun getByID(primaryKey:Int):TaskData
+	suspend fun getByID(primaryKey:Int):TaskData
 
 	@Query("SELECT*FROM TaskTable WHERE taskStatus LIKE:status")
 	fun getListByStatus(status:Boolean):LiveData<List<TaskData>>
@@ -49,8 +50,11 @@ interface Dao {
 
 	@Insert(onConflict = OnConflictStrategy.REPLACE)
 	suspend fun addNewCategory(category: Category)
-	@Insert(onConflict = OnConflictStrategy.IGNORE)
+	@Insert(onConflict = OnConflictStrategy.REPLACE)
 	suspend fun addSub(stepTask: StepTask)
+
+	@Delete
+	suspend fun deleteStep(stepTask: StepTask)
 
 
 

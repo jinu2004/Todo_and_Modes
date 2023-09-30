@@ -1,6 +1,7 @@
 package com.jinu.todoandmodes
 
 import android.annotation.SuppressLint
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -22,6 +23,10 @@ import com.jinu.todoandmodes.recyclerview.TaskOverViewAdapter
 class TaskView : Fragment() {
 	private lateinit var binding: FragmentTaskViewBinding
 	private lateinit var roomViewModel: RoomViewModel
+
+	companion object{
+		val PASSING_PRIMARY_KEY = "primary"
+	}
 
 	@SuppressLint("SetTextI18n")
 	override fun onCreateView(
@@ -45,7 +50,7 @@ class TaskView : Fragment() {
 			if (filter.isNotEmpty()) binding.percentText.text = " ${percentage.toInt()}%"
 			binding.circularProgressIndicator.progress = percentage.toInt()
 			if (percentage == 0.0) binding.addressingText.text = "You have to complete tasks!!"
-			else if (percentage> 0 && percentage < 50) binding.addressingText.text = "keep it up!!"
+			else if (percentage > 0 && percentage < 50) binding.addressingText.text = "keep it up!!"
 			else if (percentage > 50 && percentage < 80) binding.addressingText.text =
 				"you have to do a little more"
 			else if (percentage.toInt() == 100) binding.addressingText.text = "Congratulation"
@@ -54,6 +59,14 @@ class TaskView : Fragment() {
 			val filterToDo = it.filter { it.taskStatus == false && it.dueDate == currentDate }
 			val adapter = InProgressAdapter(filterToDo, roomViewModel)
 			binding.inProgress.adapter = adapter
+			adapter.setOnclickListener(object : InProgressAdapter.OnClickListener {
+				override fun onClick(position: Int) {
+					val intent = Intent(context, DetailsOfTask::class.java)
+					intent.putExtra(PASSING_PRIMARY_KEY,filterToDo[position].primaryKey)
+					startActivity(intent)
+				}
+
+			})
 
 			binding.taskProgressCount.text = filterToDo.size.toString()
 			if (filterToDo.isEmpty()) {
@@ -67,7 +80,7 @@ class TaskView : Fragment() {
 		roomViewModel.allCategory.observe(viewLifecycleOwner) {
 			val adapter = TaskOverViewAdapter(it, roomViewModel)
 			binding.taskGroup.adapter = adapter
-			adapter.setOnclickListener(object :TaskOverViewAdapter.OnClickListener{
+			adapter.setOnclickListener(object : TaskOverViewAdapter.OnClickListener {
 				override fun onClick(position: Int) {
 					val bundle = bundleOf("select" to position)
 					view?.findNavController()
@@ -78,7 +91,7 @@ class TaskView : Fragment() {
 			binding.groupCount.text = it.size.toString()
 		}
 
-		binding.button.setOnClickListener{
+		binding.button.setOnClickListener {
 			view?.findNavController()
 				?.navigate(R.id.action_home_fragment_to_task_fragment)
 		}

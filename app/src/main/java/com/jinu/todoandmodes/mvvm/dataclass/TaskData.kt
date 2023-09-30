@@ -7,7 +7,7 @@ import androidx.room.PrimaryKey
 data class TaskData(
 	@PrimaryKey
 	val primaryKey:Int?=null,
-	val taskName:String?=null,
+	var taskName:String?=null,
 	val startDate:Long?=null,
 	val dueDate:Long?=null,
 	val time: Long?=null,

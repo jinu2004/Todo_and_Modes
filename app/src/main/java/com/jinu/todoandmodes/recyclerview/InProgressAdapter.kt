@@ -1,15 +1,20 @@
 package com.jinu.todoandmodes.recyclerview
 
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.jinu.todoandmodes.databinding.InProgressViewBinding
 import com.jinu.todoandmodes.mvvm.dataclass.TaskData
 import com.jinu.todoandmodes.mvvm.viewmodel.RoomViewModel
 
-class InProgressAdapter(private val list: List<TaskData>, private val roomViewModel: RoomViewModel) :
+class InProgressAdapter(
+	private val list: List<TaskData>,
+	private val roomViewModel: RoomViewModel,
+) :
 	RecyclerView.Adapter<InProgressAdapter.ViewHolder>() {
-	private var onClickListener:OnClickListener?=null
+	private var onClickListener: OnClickListener? = null
+
 	inner class ViewHolder(val binding: InProgressViewBinding) :
 		RecyclerView.ViewHolder(binding.root)
 
@@ -31,10 +36,15 @@ class InProgressAdapter(private val list: List<TaskData>, private val roomViewMo
 			if (category.isNotEmpty())
 				holder.binding.icon.setImageResource(category.first().icon!!)
 		}
-		roomViewModel.getAllStep(data.primaryKey!!).observeForever{ it ->
+		roomViewModel.getAllStep(data.primaryKey!!).observeForever { it ->
 			val filterForProgress = it.filter { it.state }
-			val progress = (filterForProgress.size.toDouble()/it.size)*100
-			holder.binding.subProgress.progress = progress.toInt()
+			val progress = (filterForProgress.size.toDouble() / it.size) * 100
+			if (it.isNotEmpty()) {
+				holder.binding.subProgress.progress = progress.toInt()
+				holder.binding.subProgress.visibility = View.VISIBLE
+			}
+			else
+				holder.binding.subProgress.visibility = View.INVISIBLE
 		}
 
 		holder.binding.card.setOnClickListener {
@@ -44,9 +54,11 @@ class InProgressAdapter(private val list: List<TaskData>, private val roomViewMo
 		}
 
 	}
-	fun setOnclickListener(onClickListener:OnClickListener){
+
+	fun setOnclickListener(onClickListener: OnClickListener) {
 		this.onClickListener = onClickListener
 	}
+
 	interface OnClickListener {
 		fun onClick(position: Int)
 

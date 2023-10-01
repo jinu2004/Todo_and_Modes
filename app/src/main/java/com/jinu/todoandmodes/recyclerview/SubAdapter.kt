@@ -9,12 +9,14 @@ import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.EditorInfo
 import android.view.inputmethod.InputMethodManager
+import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
+import com.jinu.todoandmodes.R
 import com.jinu.todoandmodes.databinding.SubTaskDoneBinding
 import com.jinu.todoandmodes.mvvm.dataclass.StepTask
 import com.jinu.todoandmodes.mvvm.viewmodel.RoomViewModel
 
-class SubAdapter(private val sublist: List<StepTask>, private val roomViewModel: RoomViewModel) :
+class SubAdapter(private val sublist: ArrayList<StepTask>, private val roomViewModel: RoomViewModel) :
 	RecyclerView.Adapter<SubAdapter.ViewHolder>() {
 	inner class ViewHolder(val binding: SubTaskDoneBinding) : RecyclerView.ViewHolder(binding.root)
 
@@ -42,6 +44,12 @@ class SubAdapter(private val sublist: List<StepTask>, private val roomViewModel:
 		else holder.binding.close.visibility = View.INVISIBLE
 
 		holder.binding.radioButton.isChecked = data.state
+
+		if (data.state){
+			val background = ContextCompat.getDrawable(holder.binding.root.context, R.drawable.crossline)
+			holder.binding.text.background = background
+		}
+
 
 		if (data.text.isNullOrBlank()) {
 			holder.binding.close.visibility = View.VISIBLE
@@ -72,10 +80,6 @@ class SubAdapter(private val sublist: List<StepTask>, private val roomViewModel:
 		}
 
 
-
-
-
-
 		holder.binding.radioButton.setOnCheckedChangeListener { _, checked ->
 			data.state = checked
 			handler.post {
@@ -86,6 +90,10 @@ class SubAdapter(private val sublist: List<StepTask>, private val roomViewModel:
 			}
 		}
 
-
+	}
+	fun moveItem(fromPosition: Int, toPosition: Int) {
+		val item = sublist.removeAt(fromPosition)
+		sublist.add(toPosition, item)
+		notifyItemMoved(fromPosition, toPosition)
 	}
 }

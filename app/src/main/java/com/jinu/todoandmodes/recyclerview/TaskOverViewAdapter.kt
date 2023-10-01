@@ -29,14 +29,13 @@ class TaskOverViewAdapter(val list: List<Category>, private val roomViewModel: R
 		holder.binding.nameGroup.text = data.heading
 		holder.binding.logo.setImageResource(data.icon!!)
 		roomViewModel.getByCategoryID(data.primaryKey!!).observeForever { it ->
-			val filter =
-				it.filter { it.taskStatus == false && it.dueDate == MaterialDatePicker.todayInUtcMilliseconds() }
+
 			val filterForPer =
-				it.filter { it.taskStatus == true && it.dueDate == MaterialDatePicker.todayInUtcMilliseconds() }
-			val filteredCategory =
+				it.filter { it.taskStatus == true && it.dueDate == MaterialDatePicker.todayInUtcMilliseconds()}
+			val filterByDate =
 				it.filter { it.dueDate == MaterialDatePicker.todayInUtcMilliseconds() }
-			val percentage = (filterForPer.size.toDouble() / filteredCategory.size) * 100
-			holder.binding.count.text = "${filter.size} Tasks"
+			val percentage = (filterForPer.size.toDouble() / filterByDate.size) * 100
+			holder.binding.count.text = "${filterForPer.size}/${filterByDate.size} Tasks"
 			holder.binding.groupProgress.progress = percentage.toInt()
 			holder.binding.progressCount.text = "${percentage.toInt()}%"
 

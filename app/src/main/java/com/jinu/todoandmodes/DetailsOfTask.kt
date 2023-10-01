@@ -12,12 +12,14 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.ItemTouchHelper
 import com.jinu.todoandmodes.databinding.ActivityDetailsOfTaskBinding
 import com.jinu.todoandmodes.mvvm.dataclass.StepTask
 import com.jinu.todoandmodes.mvvm.dataclass.TaskData
 import com.jinu.todoandmodes.mvvm.viewmodel.RoomViewModel
 import com.jinu.todoandmodes.recyclerview.DropDownAdapter
 import com.jinu.todoandmodes.recyclerview.SubAdapter
+import com.jinu.todoandmodes.recyclerview.drag_gesture.DragHelper
 import java.time.Instant
 import java.time.ZoneId
 import java.time.format.DateTimeFormatter
@@ -36,9 +38,14 @@ class DetailsOfTask : AppCompatActivity() {
 		setContentView(binding.root)
 		roomViewModel = ViewModelProvider(this)[RoomViewModel::class.java]
 		val data = intent.getIntExtra(TaskView.PASSING_PRIMARY_KEY, 0)
-		roomViewModel.getAllStep(data).observe(this) {
+
+
+
+		roomViewModel.getAllStep(data).observeForever {
 			val item = it
-			val adapter = SubAdapter(item, roomViewModel)
+			val adapter = SubAdapter(item as ArrayList<StepTask>, roomViewModel)
+			val itemTouchHelper = ItemTouchHelper(DragHelper(adapter))
+			itemTouchHelper.attachToRecyclerView(binding.recyclerView)
 			binding.recyclerView.layoutManager = GridLayoutManager(this, 1)
 			binding.recyclerView.adapter = adapter
 			binding.materialCardView3.setOnClickListener {
@@ -47,7 +54,6 @@ class DetailsOfTask : AppCompatActivity() {
 				adapter.notifyItemInserted(item.size)
 			}
 		}
-
 
 		roomViewModel.allTask.observe(this) { it ->
 			val list = it.filter { it.primaryKey == data }
@@ -104,6 +110,8 @@ class DetailsOfTask : AppCompatActivity() {
 
 
 		}
+
+		binding.materialToolbar.setNavigationOnClickListener { onBackPressed() }
 
 
 		/// end of activity

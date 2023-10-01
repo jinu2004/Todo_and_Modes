@@ -23,6 +23,10 @@ class ToDoListView : Fragment() {
 	private lateinit var roomViewModel: RoomViewModel
 	private var currentItem = "All"
 
+	companion object {
+		var currentCategory = 0
+	}
+
 	override fun onCreateView(
 		inflater: LayoutInflater,
 		container: ViewGroup?,
@@ -33,7 +37,10 @@ class ToDoListView : Fragment() {
 		binding.listTask.layoutManager = GridLayoutManager(context, 1)
 		binding.recycler.layoutManager =
 			LinearLayoutManager(context, RecyclerView.HORIZONTAL, false)
-		val current = arguments?.getInt("select")
+		val current = arguments?.getInt(TaskView.PASSING_SELECTED_CATEGORY)
+		if (current != null) {
+			currentCategory = current
+		}
 
 
 		val categoryList = arrayListOf<Category>()
@@ -44,12 +51,13 @@ class ToDoListView : Fragment() {
 			categoryList.addAll(it)
 			val reAdapter = ChipAdapter(categoryList)
 			binding.recycler.adapter = reAdapter
+
+			/// updating the selected category that i passed to this fragment
 			if (current != null) {
 				reAdapter.selectedItemPosition = current + 1
-			}
-			if (current != null) {
 				reAdapter.notifyItemChanged(current + 1)
 			}
+			// checking the current category
 			if (current == null) {
 				roomViewModel.allTaskToDane.observe(viewLifecycleOwner) {
 					val toAdapter = TodoListAdapter(it)
@@ -67,26 +75,25 @@ class ToDoListView : Fragment() {
 				}
 			} else {
 				roomViewModel.allTaskToDane.observe(viewLifecycleOwner) { data ->
-						val dataPro =
-							data.filter { it.category == categoryList[current + 1].heading }
-						val toAdapter = TodoListAdapter(dataPro)
-						binding.listTask.adapter = toAdapter
-						toAdapter.setOnclickListener(object :
-							TodoListAdapter.SetOnCheckedStateChangeListener {
-							override fun onCheck(position: Int, status: Boolean) {
-								binding.listTask.post {
-									updateStatus(status, dataPro[position])
-									toAdapter.notifyItemChanged(position)
-								}
+					val dataPro =
+						data.filter { it.category == categoryList[current + 1].heading }
+					val toAdapter = TodoListAdapter(dataPro)
+					binding.listTask.adapter = toAdapter
+					toAdapter.setOnclickListener(object :
+						TodoListAdapter.SetOnCheckedStateChangeListener {
+						override fun onCheck(position: Int, status: Boolean) {
+							binding.listTask.post {
+								updateStatus(status, dataPro[position])
+								toAdapter.notifyItemChanged(position)
 							}
+						}
 
-						})
+					})
 
 				}
 			}
 
-
-
+			// The category click event and processing the data
 			reAdapter.setOnclickListener(object : ChipAdapter.OnClickListener {
 				override fun onClick(position: Int) {
 					currentItem = categoryList[position].heading!!
@@ -96,6 +103,7 @@ class ToDoListView : Fragment() {
 						if (currentItem != "All") {
 							val toAdapter = TodoListAdapter(dataPro)
 							binding.listTask.adapter = toAdapter
+							currentCategory = position-1
 							toAdapter.setOnclickListener(object :
 								TodoListAdapter.SetOnCheckedStateChangeListener {
 								override fun onCheck(position: Int, status: Boolean) {

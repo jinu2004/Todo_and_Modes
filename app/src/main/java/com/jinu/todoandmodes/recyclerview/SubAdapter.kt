@@ -50,7 +50,6 @@ class SubAdapter(private val sublist: ArrayList<StepTask>, private val roomViewM
 			holder.binding.text.background = background
 		}
 
-
 		if (data.text.isNullOrBlank()) {
 			holder.binding.close.visibility = View.VISIBLE
 			holder.binding.close.setOnClickListener {
@@ -58,7 +57,6 @@ class SubAdapter(private val sublist: ArrayList<StepTask>, private val roomViewM
 			}
 
 		} else holder.binding.close.visibility = View.INVISIBLE
-
 
 		holder.binding.text.setOnEditorActionListener { _, actionId, event ->
 			if (actionId == EditorInfo.IME_ACTION_DONE || (event != null && event.action == KeyEvent.ACTION_DOWN && event.keyCode == KeyEvent.KEYCODE_ENTER)) {
@@ -78,7 +76,6 @@ class SubAdapter(private val sublist: ArrayList<StepTask>, private val roomViewM
 			imm.showSoftInput(holder.binding.text, InputMethodManager.SHOW_IMPLICIT)
 			holder.binding.text.selectAll()
 		}
-
 
 		holder.binding.radioButton.setOnCheckedChangeListener { _, checked ->
 			data.state = checked

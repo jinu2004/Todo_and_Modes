@@ -21,6 +21,7 @@ import com.google.android.material.datepicker.MaterialDatePicker
 import com.google.android.material.timepicker.MaterialTimePicker
 import com.google.android.material.timepicker.TimeFormat
 import com.jinu.todoandmodes.R
+import com.jinu.todoandmodes.ToDoListView
 import com.jinu.todoandmodes.databinding.FragmentBottomSheetBinding
 import com.jinu.todoandmodes.databinding.TaskGroupSelectBinding
 import com.jinu.todoandmodes.mvvm.dataclass.TaskData
@@ -82,6 +83,7 @@ class BottomSheet : BottomSheetDialogFragment() {
 
 			val dropDownAdapter = DropDownAdapter(requireContext(), binding2.root.id, it)
 			binding.dynamic.adapter = dropDownAdapter
+			binding.dynamic.setSelection(ToDoListView.currentCategory)
 			binding.dynamic.onItemSelectedListener = object :
 				AdapterView.OnItemSelectedListener {
 				override fun onItemSelected(

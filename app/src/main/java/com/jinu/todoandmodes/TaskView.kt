@@ -26,6 +26,7 @@ class TaskView : Fragment() {
 
 	companion object{
 		val PASSING_PRIMARY_KEY = "primary"
+		val PASSING_SELECTED_CATEGORY = "current_category"
 	}
 
 	@SuppressLint("SetTextI18n")
@@ -82,7 +83,7 @@ class TaskView : Fragment() {
 			binding.taskGroup.adapter = adapter
 			adapter.setOnclickListener(object : TaskOverViewAdapter.OnClickListener {
 				override fun onClick(position: Int) {
-					val bundle = bundleOf("select" to position)
+					val bundle = bundleOf(PASSING_SELECTED_CATEGORY to position)
 					view?.findNavController()
 						?.navigate(R.id.action_home_fragment_to_task_fragment, bundle)
 				}

@@ -17,6 +17,6 @@ data class TaskData(
 	val repeatEnable:Boolean?=null,
 	val repeatable:String?=null,
 	val description:String?=null,
-	val category:String?=null,
-	val categoryId:Int?=null
+	var category:String?=null,
+	var categoryId:Int?=null
 )

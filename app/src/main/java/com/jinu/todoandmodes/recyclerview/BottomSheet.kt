@@ -34,8 +34,8 @@ class BottomSheet : BottomSheetDialogFragment() {
 	private lateinit var roomViewModel: RoomViewModel
 	private var datePickerData: Long? = null
 	private var timePickerData: Long? = null
-	private var selectedCategory:String?=null
-	private var selectedCategoryId:Int?=null
+	private var selectedCategory: String? = null
+	private var selectedCategoryId: Int? = null
 
 	@SuppressLint("InflateParams")
 	override fun onCreateView(
@@ -50,16 +50,14 @@ class BottomSheet : BottomSheetDialogFragment() {
 
 
 
-		if (isDarkMode(requireContext())){
+		if (isDarkMode(requireContext())) {
 			val color = Color.parseColor("#E1E3E0") // Replace with your desired color
 			val mode = PorterDuff.Mode.SRC_ATOP
 			val colorFilter = PorterDuffColorFilter(color, mode)
 			binding.pickDateTime.colorFilter = colorFilter
 			binding.setAlarm.colorFilter = colorFilter
 			binding.repeat.colorFilter = colorFilter
-		}
-
-		else{
+		} else {
 			val color = Color.parseColor("#191C1B") // Replace with your desired color
 			val mode = PorterDuff.Mode.SRC_ATOP
 			val colorFilter = PorterDuffColorFilter(color, mode)
@@ -70,7 +68,8 @@ class BottomSheet : BottomSheetDialogFragment() {
 
 		binding.text.post {
 			binding.text.requestFocus()
-			val imm = binding.text.context.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+			val imm =
+				binding.text.context.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
 			imm.showSoftInput(binding.text, InputMethodManager.SHOW_IMPLICIT)
 			binding.text.selectAll()
 		}
@@ -79,11 +78,18 @@ class BottomSheet : BottomSheetDialogFragment() {
 
 
 		roomViewModel.allCategory.observe(this) {
-			val dropDownAdapter = DropDownAdapter(requireContext(),binding2.root.id, it)
+
+
+			val dropDownAdapter = DropDownAdapter(requireContext(), binding2.root.id, it)
 			binding.dynamic.adapter = dropDownAdapter
 			binding.dynamic.onItemSelectedListener = object :
 				AdapterView.OnItemSelectedListener {
-				override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
+				override fun onItemSelected(
+					parent: AdapterView<*>?,
+					view: View?,
+					position: Int,
+					id: Long,
+				) {
 					selectedCategory = it[position].heading
 					selectedCategoryId = it[position].primaryKey
 				}
@@ -105,7 +111,7 @@ class BottomSheet : BottomSheetDialogFragment() {
 		binding.floating.setOnClickListener {
 			val text = binding.text.text.toString()
 
-			if (text.isNotEmpty() && datePickerData != null){
+			if (text.isNotEmpty() && datePickerData != null) {
 				roomViewModel.addNewTask(
 					TaskData(
 						null,
@@ -120,15 +126,14 @@ class BottomSheet : BottomSheetDialogFragment() {
 						"",
 						"",
 						category = selectedCategory,
-						categoryId =selectedCategoryId
+						categoryId = selectedCategoryId
 					)
 				)
 				binding.text.text.clear()
-		}
-			else {
+			} else {
 				Toast.makeText(context, "please enter the task name", Toast.LENGTH_SHORT).show()
-				Log.e("date","$datePickerData")
-				Log.e("time","$timePickerData")
+				Log.e("date", "$datePickerData")
+				Log.e("time", "$timePickerData")
 				Log.e("msg", text)
 			}
 
@@ -187,6 +192,7 @@ class BottomSheet : BottomSheetDialogFragment() {
 			timePickerData = (hoursInMilliseconds + minutesInMilliseconds).toLong()
 		}
 	}
+
 	private fun isDarkMode(context: Context): Boolean {
 		val currentNightMode =
 			context.resources.configuration.uiMode and Configuration.UI_MODE_NIGHT_MASK

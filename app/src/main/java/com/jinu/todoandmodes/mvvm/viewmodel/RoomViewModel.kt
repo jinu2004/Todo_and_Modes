@@ -62,7 +62,9 @@ class RoomViewModel(application: Application) : AndroidViewModel(application) {
 	fun addSub(stepTask: StepTask) {
 		viewModelScope.launch(Dispatchers.IO) { repository.addSub(stepTask) }
 	}
-	fun updateTask(taskData: TaskData) = viewModelScope.launch(Dispatchers.IO) { repository.updateTask(taskData) }
+	fun updateTask(taskData: TaskData){viewModelScope.launch(Dispatchers.IO) { repository.updateTask(taskData) }}
 
-	fun deleteStep(stepTask: StepTask) = viewModelScope.launch(Dispatchers.IO) { repository.deleteStep(stepTask)}
+	fun deleteStep(stepTask: StepTask) {
+		viewModelScope.launch(Dispatchers.IO) { repository.deleteStep(stepTask) }
+	}
 }

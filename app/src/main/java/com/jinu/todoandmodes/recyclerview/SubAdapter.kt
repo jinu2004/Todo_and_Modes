@@ -1,11 +1,14 @@
 package com.jinu.todoandmodes.recyclerview
 
+import android.annotation.SuppressLint
+import android.content.Context
 import android.os.Handler
 import android.view.KeyEvent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.EditorInfo
+import android.view.inputmethod.InputMethodManager
 import androidx.recyclerview.widget.RecyclerView
 import com.jinu.todoandmodes.databinding.SubTaskDoneBinding
 import com.jinu.todoandmodes.mvvm.dataclass.StepTask
@@ -28,6 +31,7 @@ class SubAdapter(private val sublist: List<StepTask>, private val roomViewModel:
 		return sublist.size
 	}
 
+	@SuppressLint("NewApi")
 	override fun onBindViewHolder(holder: ViewHolder, position: Int) {
 		val data = sublist[position]
 
@@ -58,6 +62,13 @@ class SubAdapter(private val sublist: List<StepTask>, private val roomViewModel:
 				return@setOnEditorActionListener true
 			}
 			return@setOnEditorActionListener false
+		}
+
+		holder.binding.text.post {
+			holder.binding.text.requestFocus()
+			val imm = holder.binding.text.context.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+			imm.showSoftInput(holder.binding.text, InputMethodManager.SHOW_IMPLICIT)
+			holder.binding.text.selectAll()
 		}
 
 

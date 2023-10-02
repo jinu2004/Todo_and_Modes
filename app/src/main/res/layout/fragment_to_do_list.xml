@@ -17,7 +17,7 @@
             android:id="@+id/materialToolbar2"
             android:layout_width="match_parent"
             app:title="@string/tasks"
-            app:menu="@menu/menu"
+            app:menu="@menu/history"
             app:navigationIcon="@drawable/round_arrow_back_24"
             android:layout_height="wrap_content"
             app:layout_constraintEnd_toEndOf="parent"
@@ -76,6 +76,7 @@
             app:layout_constraintTop_toTopOf="@+id/textView" />
 
         <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/history_recycler"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="10dp"

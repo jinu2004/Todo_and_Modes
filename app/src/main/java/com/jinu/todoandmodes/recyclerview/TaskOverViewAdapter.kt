@@ -31,9 +31,9 @@ class TaskOverViewAdapter(val list: List<Category>, private val roomViewModel: R
 		roomViewModel.getByCategoryID(data.primaryKey!!).observeForever { it ->
 
 			val filterForPer =
-				it.filter { it.taskStatus == true && it.dueDate == MaterialDatePicker.todayInUtcMilliseconds()}
+				it.filter { it.taskStatus == true && it.taskDoneDate == MaterialDatePicker.todayInUtcMilliseconds()}
 			val filterByDate =
-				it.filter { it.dueDate == MaterialDatePicker.todayInUtcMilliseconds() }
+				it.filter { it.startDate == MaterialDatePicker.todayInUtcMilliseconds() }
 			val percentage = (filterForPer.size.toDouble() / filterByDate.size) * 100
 			holder.binding.count.text = "${filterForPer.size}/${filterByDate.size} Tasks"
 			holder.binding.groupProgress.progress = percentage.toInt()

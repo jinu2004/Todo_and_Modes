@@ -27,7 +27,7 @@
                 app:menu="@menu/topbarmenu"
                 app:navigationIcon="@drawable/round_menu_24"
                 app:subtitle=""
-                app:title="Home" />
+                app:title="Todo Today" />
 
 
             <com.google.android.material.card.MaterialCardView

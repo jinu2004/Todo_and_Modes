@@ -1,6 +1,7 @@
 package com.jinu.todoandmodes
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -10,9 +11,9 @@ import androidx.navigation.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.google.android.material.datepicker.MaterialDatePicker
 import com.jinu.todoandmodes.databinding.FragmentToDoListBinding
 import com.jinu.todoandmodes.mvvm.dataclass.Category
-import com.jinu.todoandmodes.mvvm.dataclass.TaskData
 import com.jinu.todoandmodes.mvvm.viewmodel.RoomViewModel
 import com.jinu.todoandmodes.recyclerview.ChipAdapter
 import com.jinu.todoandmodes.recyclerview.TodoListAdapter
@@ -41,11 +42,32 @@ class ToDoListView : Fragment() {
 		if (current != null) {
 			currentCategory = current
 		}
+		var expandable = true
+		binding.expand.setOnClickListener {
+			Log.e("expand", expandable.toString())
+			expandable = !expandable
+			if (!expandable) {
+				binding.historyRecycler.visibility = View.INVISIBLE
+				binding.expand.setImageResource(R.drawable.baseline_arrow_drop_up_24)
+			} else {
+				binding.historyRecycler.visibility = View.VISIBLE
+				binding.historyRecycler.layoutManager = GridLayoutManager(context, 1)
+				binding.expand.setImageResource(R.drawable.baseline_arrow_drop_down_24)
+			}
+		}
+		if (!expandable) {
+			binding.historyRecycler.visibility = View.INVISIBLE
+			binding.expand.setImageResource(R.drawable.baseline_arrow_drop_up_24)
+		} else {
+			binding.historyRecycler.visibility = View.VISIBLE
+			binding.historyRecycler.layoutManager = GridLayoutManager(context, 1)
+			binding.expand.setImageResource(R.drawable.baseline_arrow_drop_down_24)
+		}
 
 
-		val categoryList = arrayListOf<Category>()
-
+// task to be done
 		roomViewModel.allCategory.observe(viewLifecycleOwner) { it ->
+			val categoryList = arrayListOf<Category>()
 			categoryList.clear()
 			categoryList.add(0, Category(null, null, "All"))
 			categoryList.addAll(it)
@@ -59,36 +81,46 @@ class ToDoListView : Fragment() {
 			}
 			// checking the current category
 			if (current == null) {
-				roomViewModel.allTaskToDane.observe(viewLifecycleOwner) {
-					val toAdapter = TodoListAdapter(it)
+				roomViewModel.allTask.observe(viewLifecycleOwner) { data ->
+					val dataPro =
+						data.filter { it.taskStatus == false }
+					val dataHis =
+						data.filter { it.taskStatus == true && it.taskDoneDate == MaterialDatePicker.todayInUtcMilliseconds() }
+					val toAdapter = TodoListAdapter(dataPro, roomViewModel)
+					val doneHistoryAdapter = TodoListAdapter(dataHis, roomViewModel)
 					binding.listTask.adapter = toAdapter
-					toAdapter.setOnclickListener(object :
-						TodoListAdapter.SetOnCheckedStateChangeListener {
-						override fun onCheck(position: Int, status: Boolean) {
-							binding.listTask.post {
-								updateStatus(status, it[position])
-								toAdapter.notifyItemChanged(position)
-							}
-						}
+					binding.historyRecycler.adapter = doneHistoryAdapter
 
-					})
+					if (dataHis.isEmpty()) {
+						binding.textView.visibility = View.INVISIBLE
+						binding.expand.visibility = View.INVISIBLE
+					} else {
+						binding.textView.visibility = View.VISIBLE
+						binding.expand.visibility = View.VISIBLE
+					}
 				}
 			} else {
-				roomViewModel.allTaskToDane.observe(viewLifecycleOwner) { data ->
+				roomViewModel.allTask.observe(viewLifecycleOwner) { data ->
 					val dataPro =
-						data.filter { it.category == categoryList[current + 1].heading }
-					val toAdapter = TodoListAdapter(dataPro)
-					binding.listTask.adapter = toAdapter
-					toAdapter.setOnclickListener(object :
-						TodoListAdapter.SetOnCheckedStateChangeListener {
-						override fun onCheck(position: Int, status: Boolean) {
-							binding.listTask.post {
-								updateStatus(status, dataPro[position])
-								toAdapter.notifyItemChanged(position)
-							}
-						}
+						data.filter { it.category == categoryList[current + 1].heading && it.taskStatus == false }
+					val dataHis =
+						data.filter { it.category == categoryList[current + 1].heading && it.taskStatus == true && it.taskDoneDate == MaterialDatePicker.todayInUtcMilliseconds() }
+					val toAdapter = TodoListAdapter(dataPro, roomViewModel)
+					val doneHistoryAdapter = TodoListAdapter(dataHis, roomViewModel)
 
-					})
+					binding.listTask.adapter = toAdapter
+
+
+					binding.historyRecycler.adapter = doneHistoryAdapter
+
+					if (dataHis.isEmpty()) {
+						binding.textView.visibility = View.INVISIBLE
+						binding.expand.visibility = View.INVISIBLE
+					} else {
+						binding.textView.visibility = View.VISIBLE
+						binding.expand.visibility = View.VISIBLE
+					}
+
 
 				}
 			}
@@ -97,36 +129,46 @@ class ToDoListView : Fragment() {
 			reAdapter.setOnclickListener(object : ChipAdapter.OnClickListener {
 				override fun onClick(position: Int) {
 					currentItem = categoryList[position].heading!!
-					roomViewModel.allTaskToDane.observe(viewLifecycleOwner) { data ->
+					roomViewModel.allTask.observe(viewLifecycleOwner) { data ->
 
-						val dataPro = data.filter { it.category == currentItem }
+
 						if (currentItem != "All") {
-							val toAdapter = TodoListAdapter(dataPro)
+							val dataPro =
+								data.filter { it.category == currentItem && it.taskStatus == false }
+							val dataHis =
+								data.filter { it.category == currentItem && it.taskStatus == true && it.taskDoneDate == MaterialDatePicker.todayInUtcMilliseconds() }
+							val doneHistoryAdapter = TodoListAdapter(dataHis, roomViewModel)
+							val toAdapter = TodoListAdapter(dataPro, roomViewModel)
 							binding.listTask.adapter = toAdapter
-							currentCategory = position-1
-							toAdapter.setOnclickListener(object :
-								TodoListAdapter.SetOnCheckedStateChangeListener {
-								override fun onCheck(position: Int, status: Boolean) {
-									binding.listTask.post {
-										updateStatus(status, dataPro[position])
-										toAdapter.notifyItemChanged(position)
-									}
-								}
+							currentCategory = position - 1
+							binding.historyRecycler.adapter = doneHistoryAdapter
 
-							})
+							if (dataHis.isEmpty()) {
+								binding.textView.visibility = View.INVISIBLE
+								binding.expand.visibility = View.INVISIBLE
+							} else {
+								binding.textView.visibility = View.VISIBLE
+								binding.expand.visibility = View.VISIBLE
+							}
+
 						} else {
-							val toAdapter = TodoListAdapter(data)
+							val dataPro = data.filter { it.taskStatus == false }
+							val dataHis =
+								data.filter { it.taskStatus == true && it.taskDoneDate == MaterialDatePicker.todayInUtcMilliseconds() }
+							val toAdapter = TodoListAdapter(dataPro, roomViewModel)
 							binding.listTask.adapter = toAdapter
-							toAdapter.setOnclickListener(object :
-								TodoListAdapter.SetOnCheckedStateChangeListener {
-								override fun onCheck(position: Int, status: Boolean) {
-									binding.listTask.post {
-										updateStatus(status, data[position])
-										toAdapter.notifyItemChanged(position)
-									}
-								}
 
-							})
+							val doneHistoryAdapter = TodoListAdapter(dataHis, roomViewModel)
+							binding.historyRecycler.adapter = doneHistoryAdapter
+
+							if (dataHis.isEmpty()) {
+								binding.textView.visibility = View.INVISIBLE
+								binding.expand.visibility = View.INVISIBLE
+							} else {
+								binding.textView.visibility = View.VISIBLE
+								binding.expand.visibility = View.VISIBLE
+							}
+
 						}
 					}
 				}
@@ -144,11 +186,6 @@ class ToDoListView : Fragment() {
 
 
 		return binding.root
-	}
-
-	private fun updateStatus(status: Boolean, data: TaskData) {
-		data.taskStatus = status
-		roomViewModel.updateTask(data)
 	}
 
 

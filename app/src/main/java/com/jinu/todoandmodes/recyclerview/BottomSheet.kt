@@ -116,19 +116,15 @@ class BottomSheet : BottomSheetDialogFragment() {
 			if (text.isNotEmpty() && datePickerData != null) {
 				roomViewModel.addNewTask(
 					TaskData(
-						null,
-						text,
-						startDate,
-						datePickerData,
-						timePickerData,
+						primaryKey = null,
+						taskName = text,
+						startDate = startDate,
+						dueDate = datePickerData,
+						time = timePickerData,
 						taskStatus = false,
 						notifyEnable = false,
-						0,
-						false,
-						"",
-						"",
 						category = selectedCategory,
-						categoryId = selectedCategoryId
+						categoryId = selectedCategoryId,
 					)
 				)
 				binding.text.text.clear()

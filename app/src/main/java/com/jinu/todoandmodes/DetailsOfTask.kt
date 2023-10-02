@@ -111,7 +111,10 @@ class DetailsOfTask : AppCompatActivity() {
 
 		}
 
-		binding.materialToolbar.setNavigationOnClickListener { onBackPressed() }
+		binding.materialToolbar.setNavigationOnClickListener {
+			@Suppress("DEPRECATION")
+			onBackPressed()
+		}
 
 
 		/// end of activity
@@ -140,7 +143,7 @@ class DetailsOfTask : AppCompatActivity() {
 	private fun formatMillisecondsToDate(milliseconds: Long): String {
 		val instant = Instant.ofEpochMilli(milliseconds)
 		val zoneId = ZoneId.systemDefault() // You can change this to your desired time zone
-		val formatter = DateTimeFormatter.ofPattern("dd-mm-yyyy")
+		val formatter = DateTimeFormatter.ofPattern("dd-MM-yyy")
 		// Define your desired date format
 		return formatter.format(instant.atZone(zoneId))
 

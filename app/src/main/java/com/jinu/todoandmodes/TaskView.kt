@@ -57,7 +57,7 @@ class TaskView : Fragment() {
 			else if (percentage.toInt() == 100) binding.addressingText.text = "Congratulation"
 
 
-			val filterToDo = it.filter { it.taskStatus == false && it.dueDate == currentDate }
+			val filterToDo = it.filter { it.taskStatus == false && it.dueDate!! >= it.startDate!! }
 			val adapter = InProgressAdapter(filterToDo, roomViewModel)
 			binding.inProgress.adapter = adapter
 			adapter.setOnclickListener(object : InProgressAdapter.OnClickListener {

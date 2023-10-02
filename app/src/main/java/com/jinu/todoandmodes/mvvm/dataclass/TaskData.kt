@@ -12,6 +12,7 @@ data class TaskData(
 	val dueDate:Long?=null,
 	val time: Long?=null,
 	var taskStatus:Boolean?=null,
+	var taskDoneDate:Long?=null,
 	val notifyEnable:Boolean?=null,
 	val notify: Long?=null,
 	val repeatEnable:Boolean?=null,

@@ -16,6 +16,9 @@
         android:theme="@style/Theme.TodoAndModes"
         tools:targetApi="31">
         <activity
+            android:name=".TaskHistory"
+            android:exported="false" />
+        <activity
             android:name=".DetailsOfTask"
             android:exported="false" />
         <!--

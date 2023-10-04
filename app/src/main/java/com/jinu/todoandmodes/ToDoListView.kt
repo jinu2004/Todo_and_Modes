@@ -1,5 +1,6 @@
 package com.jinu.todoandmodes
 
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -180,6 +181,15 @@ class ToDoListView : Fragment() {
 		binding.materialToolbar2.setNavigationOnClickListener {
 			view?.findNavController()
 				?.navigate(R.id.action_task_fragment_to_home_fragment)
+		}
+		binding.materialToolbar2.setOnMenuItemClickListener {
+			when (it.itemId) {
+				R.id.history_all -> {
+					startActivity(Intent(context,TaskHistory::class.java))
+					true
+				}
+				else -> true
+			}
 		}
 
 

@@ -67,4 +67,7 @@ class RoomViewModel(application: Application) : AndroidViewModel(application) {
 	fun deleteStep(stepTask: StepTask) {
 		viewModelScope.launch(Dispatchers.IO) { repository.deleteStep(stepTask) }
 	}
+	fun deleteTask(task: TaskData){
+		viewModelScope.launch(Dispatchers.IO) { repository.deleteTask(task) }
+	}
 }

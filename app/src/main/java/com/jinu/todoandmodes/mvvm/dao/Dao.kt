@@ -56,6 +56,9 @@ interface Dao {
 	@Delete
 	suspend fun deleteStep(stepTask: StepTask)
 
+	@Delete
+	suspend fun deleteTask(taskData: TaskData)
+
 
 
 }

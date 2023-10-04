@@ -93,4 +93,7 @@ class SubAdapter(private val sublist: ArrayList<StepTask>, private val roomViewM
 		sublist.add(toPosition, item)
 		notifyItemMoved(fromPosition, toPosition)
 	}
+	fun delete(position: Int){
+		roomViewModel.deleteStep(sublist[position])
+	}
 }

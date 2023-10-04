@@ -44,4 +44,7 @@ class RoomRepository(private val dao: Dao) {
 	suspend fun deleteStep(stepTask: StepTask){
 		dao.deleteStep(stepTask)
 	}
+	suspend fun deleteTask(taskData: TaskData){
+		dao.deleteTask(taskData)
+	}
 }

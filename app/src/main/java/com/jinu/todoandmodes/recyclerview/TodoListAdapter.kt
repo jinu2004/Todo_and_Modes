@@ -6,6 +6,7 @@ import android.content.Intent
 import android.content.res.ColorStateList
 import android.content.res.Configuration
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.core.content.ContextCompat
@@ -121,7 +122,8 @@ class TodoListAdapter(private val list: List<TaskData>, private val roomViewMode
 	fun formatMillisecondsToDate(milliseconds: Long): String {
 		val instant = Instant.ofEpochMilli(milliseconds)
 		val zoneId = ZoneId.systemDefault() // You can change this to your desired time zone
-		val formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy") // Define your desired date format
+		val formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy")
+		Log.e("time",formatter.toString())
 		return formatter.format(instant.atZone(zoneId))
 	}
 

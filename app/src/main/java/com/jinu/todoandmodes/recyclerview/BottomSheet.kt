@@ -1,8 +1,11 @@
 package com.jinu.todoandmodes.recyclerview
 
 import android.annotation.SuppressLint
+import android.app.AlarmManager
 import android.app.AlertDialog
+import android.app.PendingIntent
 import android.content.Context
+import android.content.Intent
 import android.content.res.Configuration
 import android.graphics.Color
 import android.graphics.PorterDuff
@@ -22,6 +25,7 @@ import com.google.android.material.timepicker.MaterialTimePicker
 import com.google.android.material.timepicker.TimeFormat
 import com.jinu.todoandmodes.R
 import com.jinu.todoandmodes.ToDoListView
+import com.jinu.todoandmodes.backgroundworkers.AlarmReceiver
 import com.jinu.todoandmodes.databinding.FragmentBottomSheetBinding
 import com.jinu.todoandmodes.databinding.TaskGroupSelectBinding
 import com.jinu.todoandmodes.mvvm.dataclass.TaskData
@@ -136,6 +140,12 @@ class BottomSheet : BottomSheetDialogFragment() {
 			}
 
 
+//			if(text.isNotEmpty() && datePickerData != null && timePickerData != null){
+//				setAlarm(requireContext(),timePickerData,)
+//			}
+
+
+
 		}
 		binding.repeat.setOnClickListener {
 			val builder = AlertDialog.Builder(requireContext())
@@ -197,4 +207,12 @@ class BottomSheet : BottomSheetDialogFragment() {
 		return currentNightMode == Configuration.UI_MODE_NIGHT_YES
 	}
 
+	private fun setAlarm(context:Context,time:Long,id:Int) {
+		val alarmManager = context.getSystemService(Context.ALARM_SERVICE) as AlarmManager
+		val intent = Intent(context, AlarmReceiver::class.java)
+		val pendingIntent = PendingIntent.getBroadcast(context, id,intent, PendingIntent.FLAG_MUTABLE)
+		alarmManager.set(AlarmManager.ELAPSED_REALTIME_WAKEUP,time,pendingIntent)
+	}
+
 }
+

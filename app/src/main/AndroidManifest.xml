@@ -4,6 +4,9 @@
     <!-- Include required permissions for Google Mobile Ads to run. -->
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
+    <uses-permission android:name="android.permission.USE_EXACT_ALARM"/>
+
 
     <application
         android:allowBackup="true"
@@ -21,6 +24,7 @@
         <activity
             android:name=".DetailsOfTask"
             android:exported="false" />
+        <receiver android:name=".backgroundworkers.AlarmReceiver" />
         <!--
             Adding this meta data is required as of Google Mobile Ads SDK version 17.0.0 as explained in
             https://developers.google.com/ad-manager/mobile-ads-sdk/android/quick-start#update_your_androidmanifestxml

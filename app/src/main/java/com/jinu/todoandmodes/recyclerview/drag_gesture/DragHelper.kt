@@ -28,11 +28,6 @@ class DragHelper(private val adapter: SubAdapter) : ItemTouchHelper.Callback() {
 		viewHolder: RecyclerView.ViewHolder,
 		target: RecyclerView.ViewHolder,
 	): Boolean {
-		val fromPosition = viewHolder.adapterPosition
-		val toPosition = target.adapterPosition
-		if (toPosition != 0) {
-			adapter.moveItem(fromPosition, toPosition)
-		}
 		return true
 	}
 

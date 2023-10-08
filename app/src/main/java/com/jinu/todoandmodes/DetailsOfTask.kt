@@ -59,6 +59,8 @@ class DetailsOfTask : AppCompatActivity() {
 			val dataTo = list.first()
 			listData = dataTo
 			binding.editText.hint = dataTo.taskName
+			binding.editText.isClickable = true
+			binding.editText.isFocusable = false
 			binding.editText.setOnEditorActionListener { _, actionId, event ->
 				if (actionId == EditorInfo.IME_ACTION_DONE || (event != null && event.action == KeyEvent.ACTION_DOWN && event.keyCode == KeyEvent.KEYCODE_ENTER)) {
 

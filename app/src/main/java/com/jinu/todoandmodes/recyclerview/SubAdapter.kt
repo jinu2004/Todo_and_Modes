@@ -88,12 +88,13 @@ class SubAdapter(private val sublist: ArrayList<StepTask>, private val roomViewM
 		}
 
 	}
-	fun moveItem(fromPosition: Int, toPosition: Int) {
-		val item = sublist.removeAt(fromPosition)
-		sublist.add(toPosition, item)
-		notifyItemMoved(fromPosition, toPosition)
-	}
+//	fun moveItem(fromPosition: Int, toPosition: Int) {
+//		val item = sublist.removeAt(fromPosition)
+//		sublist.add(toPosition, item)
+//		notifyItemMoved(fromPosition, toPosition)
+//	}
 	fun delete(position: Int){
-		roomViewModel.deleteStep(sublist[position])
+			roomViewModel.deleteStep(sublist[position])
+		notifyItemRemoved(position)
 	}
 }

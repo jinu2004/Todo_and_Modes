@@ -39,14 +39,13 @@ class BottomSheet : BottomSheetDialogFragment() {
 	private var timePickerData: Long? = null
 	private var hour: Int? = null
 	private var minute: Int? = null
-	private var day: Int? = null
-	private var month: Int? = null
-	private var year: Int? = null
 	private var selectedCategory: String? = null
 	private var selectedCategoryId: Int? = null
+	private var selectedCategoryIcon: Int? = null
 	private lateinit var alarm: AlarmManagerClass
 	private var times: Long? = null
 	private val alamId = Math.random().hashCode()
+
 	@SuppressLint("InflateParams")
 	override fun onCreateView(
 		inflater: LayoutInflater, container: ViewGroup?,
@@ -57,8 +56,6 @@ class BottomSheet : BottomSheetDialogFragment() {
 		binding2 = TaskGroupSelectBinding.inflate(layoutInflater)
 		datePickerData = MaterialDatePicker.todayInUtcMilliseconds()
 		alarm = AlarmManagerClass()
-
-
 
 
 		if (isDarkMode(requireContext())) {
@@ -85,9 +82,6 @@ class BottomSheet : BottomSheetDialogFragment() {
 			binding.text.selectAll()
 		}
 
-
-
-
 		roomViewModel.allCategory.observe(this) {
 
 
@@ -104,6 +98,7 @@ class BottomSheet : BottomSheetDialogFragment() {
 				) {
 					selectedCategory = it[position].heading
 					selectedCategoryId = it[position].primaryKey
+					selectedCategoryIcon = it[position].icon
 				}
 
 				override fun onNothingSelected(parent: AdapterView<*>?) {
@@ -143,23 +138,14 @@ class BottomSheet : BottomSheetDialogFragment() {
 				Log.e("date", "$datePickerData")
 				Log.e("msg", text)
 			}
-			if(text.isNotEmpty() && hour != null && datePickerData != null){
+			if (text.isNotEmpty() && hour != null && datePickerData != null) {
 				val newCalendar = Calendar.getInstance()
-				val calender = Calendar.getInstance()
-				calender.timeInMillis = datePickerData!!
-				year = calender[Calendar.YEAR]
-				month = calender[Calendar.MONTH]
-				day = calender[Calendar.DAY_OF_MONTH]
-
 				newCalendar[Calendar.HOUR_OF_DAY] = hour!!
 				newCalendar[Calendar.MINUTE] = minute!!
 				newCalendar[Calendar.SECOND] = 0
 				newCalendar[Calendar.MILLISECOND] = 0
-				alarm.setAlarm(requireContext(), newCalendar.time.time, alamId)
-				timePickerData = newCalendar.timeInMillis
-				Log.e("timeLong","${newCalendar.time.time}")
+				alarm.setAlarm(requireContext(), (newCalendar.time.time), alamId, selectedCategoryIcon!!,text)
 			}
-
 
 
 		}
@@ -210,6 +196,12 @@ class BottomSheet : BottomSheetDialogFragment() {
 		timePicker.addOnPositiveButtonClickListener {
 			hour = timePicker.hour
 			minute = timePicker.minute
+			val newCalendar = Calendar.getInstance()
+			newCalendar[Calendar.HOUR_OF_DAY] = hour!!
+			newCalendar[Calendar.MINUTE] = minute!!
+			newCalendar[Calendar.SECOND] = 0
+			newCalendar[Calendar.MILLISECOND] = 0
+			timePickerData = newCalendar.timeInMillis
 
 		}
 	}

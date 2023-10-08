@@ -9,6 +9,7 @@ import android.view.ViewGroup
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.R
+import com.jinu.todoandmodes.backgroundworkers.AlarmManagerClass
 import com.jinu.todoandmodes.databinding.TaskRecyclerviewItemViewBinding
 import com.jinu.todoandmodes.mvvm.dataclass.TaskData
 import com.jinu.todoandmodes.mvvm.viewmodel.RoomViewModel
@@ -92,8 +93,11 @@ class HistoryItemAdapter(private val list: List<TaskData>,private val roomViewMo
 		return currentNightMode == Configuration.UI_MODE_NIGHT_YES
 	}
 
-	fun delete(position: Int){
+	fun delete(position: Int,context: Context){
 		roomViewModel.deleteTask(list[position])
+		val alarmManagerClass = AlarmManagerClass()
+		alarmManagerClass.cancelAlarm(context,list[position].alarmId!!)
+
 		list[position].primaryKey?.let { it ->
 			roomViewModel.getAllStep(it).observeForever { list ->
 				list.forEach {

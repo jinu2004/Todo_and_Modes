@@ -23,7 +23,6 @@ import com.jinu.todoandmodes.recyclerview.drag_gesture.DragHelper
 import java.time.Instant
 import java.time.ZoneId
 import java.time.format.DateTimeFormatter
-import java.util.concurrent.TimeUnit
 
 class DetailsOfTask : AppCompatActivity() {
 	private lateinit var binding: ActivityDetailsOfTaskBinding
@@ -149,12 +148,13 @@ class DetailsOfTask : AppCompatActivity() {
 
 	}
 
+	@RequiresApi(Build.VERSION_CODES.O)
 	private fun convertMillisecondsToTime(milliseconds: Long): String {
-		val hours = TimeUnit.MILLISECONDS.toHours(milliseconds)
-		val minutes = TimeUnit.MILLISECONDS.toMinutes(milliseconds) % 60
-		val seconds = TimeUnit.MILLISECONDS.toSeconds(milliseconds) % 60
-
-		return String.format("%02d:%02d:%02d", hours, minutes, seconds)
+		val instant = Instant.ofEpochMilli(milliseconds)
+		val zoneId = ZoneId.systemDefault() // You can change this to your desired time zone
+		val formatter = DateTimeFormatter.ofPattern("hh-mm")
+		// Define your desired date format
+		return formatter.format(instant.atZone(zoneId))
 	}
 
 }

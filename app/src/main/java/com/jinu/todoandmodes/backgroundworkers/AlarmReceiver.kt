@@ -7,11 +7,13 @@ import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
 import android.os.Build
+import android.util.Log
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
 import com.jinu.todoandmodes.R
 
 class AlarmReceiver: BroadcastReceiver() {
+	@SuppressLint("UnsafeProtectedBroadcastReceiver")
 	override fun onReceive(context: Context?, intent: Intent?) {
 		showNotification(context)
 	}
@@ -28,6 +30,7 @@ class AlarmReceiver: BroadcastReceiver() {
 
 		val notificationManager = NotificationManagerCompat.from(context)
 		notificationManager.notify(NOTIFICATION_ID, notification)
+		Log.e("alarm","triggered")
 	}
 
 	private fun createNotificationChannel(context: Context?) {

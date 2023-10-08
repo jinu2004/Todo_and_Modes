@@ -1,11 +1,8 @@
 package com.jinu.todoandmodes.recyclerview
 
 import android.annotation.SuppressLint
-import android.app.AlarmManager
 import android.app.AlertDialog
-import android.app.PendingIntent
 import android.content.Context
-import android.content.Intent
 import android.content.res.Configuration
 import android.graphics.Color
 import android.graphics.PorterDuff
@@ -25,11 +22,12 @@ import com.google.android.material.timepicker.MaterialTimePicker
 import com.google.android.material.timepicker.TimeFormat
 import com.jinu.todoandmodes.R
 import com.jinu.todoandmodes.ToDoListView
-import com.jinu.todoandmodes.backgroundworkers.AlarmReceiver
+import com.jinu.todoandmodes.backgroundworkers.AlarmManagerClass
 import com.jinu.todoandmodes.databinding.FragmentBottomSheetBinding
 import com.jinu.todoandmodes.databinding.TaskGroupSelectBinding
 import com.jinu.todoandmodes.mvvm.dataclass.TaskData
 import com.jinu.todoandmodes.mvvm.viewmodel.RoomViewModel
+import java.util.Calendar
 
 @Suppress("NAME_SHADOWING")
 class BottomSheet : BottomSheetDialogFragment() {
@@ -39,9 +37,16 @@ class BottomSheet : BottomSheetDialogFragment() {
 	private lateinit var roomViewModel: RoomViewModel
 	private var datePickerData: Long? = null
 	private var timePickerData: Long? = null
+	private var hour: Int? = null
+	private var minute: Int? = null
+	private var day: Int? = null
+	private var month: Int? = null
+	private var year: Int? = null
 	private var selectedCategory: String? = null
 	private var selectedCategoryId: Int? = null
-
+	private lateinit var alarm: AlarmManagerClass
+	private var times: Long? = null
+	private val alamId = Math.random().hashCode()
 	@SuppressLint("InflateParams")
 	override fun onCreateView(
 		inflater: LayoutInflater, container: ViewGroup?,
@@ -51,6 +56,7 @@ class BottomSheet : BottomSheetDialogFragment() {
 		roomViewModel = ViewModelProvider(this)[RoomViewModel::class.java]
 		binding2 = TaskGroupSelectBinding.inflate(layoutInflater)
 		datePickerData = MaterialDatePicker.todayInUtcMilliseconds()
+		alarm = AlarmManagerClass()
 
 
 
@@ -106,7 +112,6 @@ class BottomSheet : BottomSheetDialogFragment() {
 			}
 		}
 
-
 		val startDate = MaterialDatePicker.todayInUtcMilliseconds()
 		binding.pickDateTime.setOnClickListener {
 			datePickerFun()
@@ -124,25 +129,36 @@ class BottomSheet : BottomSheetDialogFragment() {
 						taskName = text,
 						startDate = startDate,
 						dueDate = datePickerData,
-						time = timePickerData,
 						taskStatus = false,
-						notifyEnable = false,
 						category = selectedCategory,
 						categoryId = selectedCategoryId,
+						time = timePickerData,
+						alarmId = alamId
 					)
 				)
+				Log.e("date", "$datePickerData")
 				binding.text.text.clear()
 			} else {
 				Toast.makeText(context, "please enter the task name", Toast.LENGTH_SHORT).show()
 				Log.e("date", "$datePickerData")
-				Log.e("time", "$timePickerData")
 				Log.e("msg", text)
 			}
+			if(text.isNotEmpty() && hour != null && datePickerData != null){
+				val newCalendar = Calendar.getInstance()
+				val calender = Calendar.getInstance()
+				calender.timeInMillis = datePickerData!!
+				year = calender[Calendar.YEAR]
+				month = calender[Calendar.MONTH]
+				day = calender[Calendar.DAY_OF_MONTH]
 
-
-//			if(text.isNotEmpty() && datePickerData != null && timePickerData != null){
-//				setAlarm(requireContext(),timePickerData,)
-//			}
+				newCalendar[Calendar.HOUR_OF_DAY] = hour!!
+				newCalendar[Calendar.MINUTE] = minute!!
+				newCalendar[Calendar.SECOND] = 0
+				newCalendar[Calendar.MILLISECOND] = 0
+				alarm.setAlarm(requireContext(), newCalendar.time.time, alamId)
+				timePickerData = newCalendar.timeInMillis
+				Log.e("timeLong","${newCalendar.time.time}")
+			}
 
 
 
@@ -192,12 +208,9 @@ class BottomSheet : BottomSheetDialogFragment() {
 			.build()
 		timePicker.show(childFragmentManager, "")
 		timePicker.addOnPositiveButtonClickListener {
-			val hoursInMilliseconds =
-				timePicker.hour * 60 * 60 * 1000 // Convert hours to milliseconds (1 hour = 60 minutes * 60 seconds * 1000 milliseconds)
-			val minutesInMilliseconds =
-				timePicker.minute * 60 * 1000 // Convert minutes to milliseconds (1 minute = 60 seconds * 1000 milliseconds)
+			hour = timePicker.hour
+			minute = timePicker.minute
 
-			timePickerData = (hoursInMilliseconds + minutesInMilliseconds).toLong()
 		}
 	}
 
@@ -207,12 +220,6 @@ class BottomSheet : BottomSheetDialogFragment() {
 		return currentNightMode == Configuration.UI_MODE_NIGHT_YES
 	}
 
-	private fun setAlarm(context:Context,time:Long,id:Int) {
-		val alarmManager = context.getSystemService(Context.ALARM_SERVICE) as AlarmManager
-		val intent = Intent(context, AlarmReceiver::class.java)
-		val pendingIntent = PendingIntent.getBroadcast(context, id,intent, PendingIntent.FLAG_MUTABLE)
-		alarmManager.set(AlarmManager.ELAPSED_REALTIME_WAKEUP,time,pendingIntent)
-	}
 
 }
 

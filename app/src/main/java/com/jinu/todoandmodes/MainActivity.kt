@@ -1,10 +1,7 @@
 package com.jinu.todoandmodes
 
 import android.Manifest
-import android.app.AlarmManager
-import android.app.PendingIntent
-import android.content.Context
-import android.content.Intent
+import android.content.ComponentName
 import android.content.pm.PackageManager
 import android.os.Build
 import android.os.Bundle
@@ -27,6 +24,8 @@ class MainActivity : AppCompatActivity() {
 	private lateinit var binding: ActivityMainBinding
 	private lateinit var roomViewModel: RoomViewModel
 	private var isNotificationGranted = false
+	private var isNotificationUseGranted = false
+	private var isNotificationPostGranted = false
 	private lateinit var permissionLauncher: ActivityResultLauncher<Array<String>>
 	@RequiresApi(Build.VERSION_CODES.TIRAMISU)
 	override fun onCreate(savedInstanceState: Bundle?) {
@@ -35,7 +34,9 @@ class MainActivity : AppCompatActivity() {
 		setContentView(binding.root)
 		permissionLauncher = registerForActivityResult(ActivityResultContracts.RequestMultiplePermissions()){
 				permission->
-			isNotificationGranted = permission[Manifest.permission.POST_NOTIFICATIONS]?:isNotificationGranted
+			isNotificationGranted = permission[Manifest.permission.SCHEDULE_EXACT_ALARM]?:isNotificationGranted
+			isNotificationUseGranted = permission[Manifest.permission.USE_EXACT_ALARM]?:isNotificationUseGranted
+			isNotificationPostGranted = permission[Manifest.permission.POST_NOTIFICATIONS]?:isNotificationPostGranted
 		}
 		requestPermissions()
 
@@ -43,6 +44,13 @@ class MainActivity : AppCompatActivity() {
 		val bottomNavView = findViewById<BottomNavigationView>(R.id.bottomNavigationView)
 		bottomNavView.setupWithNavController(navController)
 
+		val receiver = ComponentName(this, AlarmReceiver::class.java)
+
+		this.packageManager.setComponentEnabledSetting(
+			receiver,
+			PackageManager.COMPONENT_ENABLED_STATE_ENABLED,
+			PackageManager.DONT_KILL_APP
+		)
 
 		val bottomSheet = BottomSheet()
 		binding.addNewTask.setOnClickListener {
@@ -57,36 +65,26 @@ class MainActivity : AppCompatActivity() {
 			roomViewModel.addNewCategory(it)
 		}
 
-		roomViewModel.allTask.observeForever {tasks->
-			val taskToAlarm = tasks.filter { it.time != null && it.taskStatus != true }
-			taskToAlarm.forEach { item->
-				setAlarm(this,item.time!!,item.primaryKey!!)
-			}
-
-		}
-
-
-
 	}
 	@RequiresApi(Build.VERSION_CODES.TIRAMISU)
 	private fun requestPermissions(){
-		isNotificationGranted = ContextCompat.checkSelfPermission(this,Manifest.permission.POST_NOTIFICATIONS) == PackageManager.PERMISSION_GRANTED
+		isNotificationPostGranted = ContextCompat.checkSelfPermission(this,Manifest.permission.POST_NOTIFICATIONS) == PackageManager.PERMISSION_GRANTED
+		isNotificationGranted = ContextCompat.checkSelfPermission(this,Manifest.permission.SCHEDULE_EXACT_ALARM) == PackageManager.PERMISSION_GRANTED
+		isNotificationUseGranted = ContextCompat.checkSelfPermission(this,Manifest.permission.USE_EXACT_ALARM) == PackageManager.PERMISSION_GRANTED
 
 
 
 		val permissionRequest:MutableList<String> = ArrayList()
 
 		if (!isNotificationGranted)
+			permissionRequest.add(Manifest.permission.SCHEDULE_EXACT_ALARM)
+		if (!isNotificationUseGranted)
+			permissionRequest.add(Manifest.permission.USE_EXACT_ALARM)
+		if (!isNotificationPostGranted)
 			permissionRequest.add(Manifest.permission.POST_NOTIFICATIONS)
 
 		if(permissionRequest.isNotEmpty())permissionLauncher.launch(permissionRequest.toTypedArray())
 
 	}
 
-	private fun setAlarm(context:Context,time:Long,id:Int) {
-		val alarmManager = context.getSystemService(Context.ALARM_SERVICE) as AlarmManager
-		val intent = Intent(context, AlarmReceiver::class.java)
-		val pendingIntent = PendingIntent.getBroadcast(context, id,intent, PendingIntent.FLAG_MUTABLE)
-		alarmManager.set(AlarmManager.ELAPSED_REALTIME_WAKEUP,time,pendingIntent)
-	}
 }

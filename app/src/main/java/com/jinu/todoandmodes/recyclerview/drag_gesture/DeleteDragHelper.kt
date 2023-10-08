@@ -29,6 +29,6 @@ class DeleteDragHelper(private val adapter:HistoryItemAdapter ): ItemTouchHelper
 	}
 
 	override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
-		adapter.delete(viewHolder.adapterPosition)
+		adapter.delete(viewHolder.adapterPosition,viewHolder.itemView.context)
 	}
 }

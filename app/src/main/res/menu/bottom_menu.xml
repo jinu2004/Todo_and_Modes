@@ -8,7 +8,7 @@
         android:checkable="false"
         android:enabled="true"
         android:icon="@drawable/round_home_24"
-        android:title="@string/tasks"
+        android:title="@string/home"
         android:visible="true"
         app:showAsAction="ifRoom" />
     <item
@@ -28,10 +28,5 @@
         android:id="@+id/calender"
         android:icon="@drawable/round_calendar_month_24"
         android:title="@string/calender"
-        app:showAsAction="always" />
-    <item
-        android:id="@+id/mine"
-        android:icon="@drawable/round_person_24"
-        android:title="@string/mine"
         app:showAsAction="always" />
 </menu>

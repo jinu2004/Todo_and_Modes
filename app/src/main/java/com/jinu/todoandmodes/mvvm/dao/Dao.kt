@@ -37,6 +37,8 @@ interface Dao {
 
 	@Query("SELECT*FROM StepTable WHERE id LIKE:mainTaskId")
 	fun getAllStep(mainTaskId:Int):LiveData<List<StepTask>>
+	@Query("SELECT*FROM TaskTable WHERE taskName LIKE :query")
+	fun searchResult(query: String?):LiveData<List<TaskData>>
 
 	@Query("SELECT COUNT(*) FROM TaskTable WHERE categoryId = :categoryId")
 	fun getCountByCategory(categoryId:Int):Int

@@ -8,11 +8,14 @@
     <fragment
         android:id="@+id/home_fragment"
         android:name="com.jinu.todoandmodes.TaskView"
-        android:label="fragment_task_view"
-        tools:layout="@layout/fragment_task_view" >
+        android:label="Todo Today"
+        tools:layout="@layout/fragment_task_view">
         <action
             android:id="@+id/action_home_fragment_to_task_fragment"
             app:destination="@id/task_fragment" />
+        <action
+            android:id="@+id/action_home_fragment_to_calenderView"
+            app:destination="@id/calender" />
     </fragment>
     <fragment
         android:id="@+id/task_fragment"
@@ -21,6 +24,15 @@
         tools:layout="@layout/fragment_to_do_list" >
         <action
             android:id="@+id/action_task_fragment_to_home_fragment"
+            app:destination="@id/home_fragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/calender"
+        android:name="com.jinu.todoandmodes.CalenderView"
+        android:label="fragment_calender_view"
+        tools:layout="@layout/fragment_calender_view" >
+        <action
+            android:id="@+id/action_calenderView_to_home_fragment"
             app:destination="@id/home_fragment" />
     </fragment>
 </navigation>

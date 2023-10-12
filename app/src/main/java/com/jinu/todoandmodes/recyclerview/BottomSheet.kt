@@ -54,7 +54,9 @@ class BottomSheet : BottomSheetDialogFragment() {
 		binding = FragmentBottomSheetBinding.inflate(inflater, container, false)
 		roomViewModel = ViewModelProvider(this)[RoomViewModel::class.java]
 		binding2 = TaskGroupSelectBinding.inflate(layoutInflater)
-		datePickerData = MaterialDatePicker.todayInUtcMilliseconds()
+
+
+
 		alarm = AlarmManagerClass()
 
 
@@ -107,7 +109,17 @@ class BottomSheet : BottomSheetDialogFragment() {
 			}
 		}
 
-		val startDate = MaterialDatePicker.todayInUtcMilliseconds()
+
+		val startDateCalender = Calendar.getInstance()
+		startDateCalender[Calendar.HOUR_OF_DAY] = 0
+		startDateCalender[Calendar.MINUTE] = 0
+		startDateCalender[Calendar.SECOND] = 0
+		startDateCalender[Calendar.MILLISECOND] = 0
+		val startDate = startDateCalender.timeInMillis
+		datePickerData = startDateCalender.timeInMillis
+
+
+
 		binding.pickDateTime.setOnClickListener {
 			datePickerFun()
 		}
@@ -131,8 +143,8 @@ class BottomSheet : BottomSheetDialogFragment() {
 						alarmId = alamId
 					)
 				)
-				Log.e("date", "$datePickerData")
 				binding.text.text.clear()
+				Log.d("Date","$datePickerData")
 			} else {
 				Toast.makeText(context, "please enter the task name", Toast.LENGTH_SHORT).show()
 				Log.e("date", "$datePickerData")
@@ -180,7 +192,13 @@ class BottomSheet : BottomSheetDialogFragment() {
 				.build()
 		datePicker.show(childFragmentManager, "")
 		datePicker.addOnPositiveButtonClickListener {
-			datePickerData = it
+			val newCalendar = Calendar.getInstance()
+			newCalendar.timeInMillis = it
+			newCalendar[Calendar.HOUR_OF_DAY] = 0
+			newCalendar[Calendar.MINUTE] = 0
+			newCalendar[Calendar.SECOND] = 0
+			newCalendar[Calendar.MILLISECOND] = 0
+			datePickerData = newCalendar.timeInMillis
 		}
 
 	}

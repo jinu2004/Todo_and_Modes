@@ -41,6 +41,9 @@ class RoomViewModel(application: Application) : AndroidViewModel(application) {
 	fun getAllStep(mainTaskId: Int): LiveData<List<StepTask>> {
 		return repository.getAllStep(mainTaskId)
 	}
+	fun searchResult(query: String?):LiveData<List<TaskData>>{
+		return repository.searchResult(query)
+	}
 	fun getByID(primaryKey:Int):TaskData?{
 		var data:TaskData?=null
 		viewModelScope.launch(Dispatchers.IO) {

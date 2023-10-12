@@ -13,7 +13,6 @@ import androidx.core.content.ContextCompat
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.findNavController
 import androidx.navigation.ui.setupWithNavController
-import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.jinu.todoandmodes.backgroundworkers.AlarmReceiver
 import com.jinu.todoandmodes.databinding.ActivityMainBinding
 import com.jinu.todoandmodes.mvvm.dataclass.Category
@@ -27,22 +26,25 @@ class MainActivity : AppCompatActivity() {
 	private var isNotificationUseGranted = false
 	private var isNotificationPostGranted = false
 	private lateinit var permissionLauncher: ActivityResultLauncher<Array<String>>
+
 	@RequiresApi(Build.VERSION_CODES.TIRAMISU)
 	override fun onCreate(savedInstanceState: Bundle?) {
 		super.onCreate(savedInstanceState)
 		binding = ActivityMainBinding.inflate(layoutInflater)
 		setContentView(binding.root)
-		permissionLauncher = registerForActivityResult(ActivityResultContracts.RequestMultiplePermissions()){
-				permission->
-			isNotificationGranted = permission[Manifest.permission.SCHEDULE_EXACT_ALARM]?:isNotificationGranted
-			isNotificationUseGranted = permission[Manifest.permission.USE_EXACT_ALARM]?:isNotificationUseGranted
-			isNotificationPostGranted = permission[Manifest.permission.POST_NOTIFICATIONS]?:isNotificationPostGranted
-		}
+		permissionLauncher =
+			registerForActivityResult(ActivityResultContracts.RequestMultiplePermissions()) { permission ->
+				isNotificationGranted =
+					permission[Manifest.permission.SCHEDULE_EXACT_ALARM] ?: isNotificationGranted
+				isNotificationUseGranted =
+					permission[Manifest.permission.USE_EXACT_ALARM] ?: isNotificationUseGranted
+				isNotificationPostGranted =
+					permission[Manifest.permission.POST_NOTIFICATIONS] ?: isNotificationPostGranted
+			}
 		requestPermissions()
 
 		val navController = findNavController(R.id.fragmentContainerView2)
-		val bottomNavView = findViewById<BottomNavigationView>(R.id.bottomNavigationView)
-		bottomNavView.setupWithNavController(navController)
+		binding.bottomNavigationView.setupWithNavController(navController)
 
 		val receiver = ComponentName(this, AlarmReceiver::class.java)
 
@@ -66,15 +68,24 @@ class MainActivity : AppCompatActivity() {
 		}
 
 	}
+
 	@RequiresApi(Build.VERSION_CODES.TIRAMISU)
-	private fun requestPermissions(){
-		isNotificationPostGranted = ContextCompat.checkSelfPermission(this,Manifest.permission.POST_NOTIFICATIONS) == PackageManager.PERMISSION_GRANTED
-		isNotificationGranted = ContextCompat.checkSelfPermission(this,Manifest.permission.SCHEDULE_EXACT_ALARM) == PackageManager.PERMISSION_GRANTED
-		isNotificationUseGranted = ContextCompat.checkSelfPermission(this,Manifest.permission.USE_EXACT_ALARM) == PackageManager.PERMISSION_GRANTED
+	private fun requestPermissions() {
+		isNotificationPostGranted = ContextCompat.checkSelfPermission(
+			this,
+			Manifest.permission.POST_NOTIFICATIONS
+		) == PackageManager.PERMISSION_GRANTED
+		isNotificationGranted = ContextCompat.checkSelfPermission(
+			this,
+			Manifest.permission.SCHEDULE_EXACT_ALARM
+		) == PackageManager.PERMISSION_GRANTED
+		isNotificationUseGranted = ContextCompat.checkSelfPermission(
+			this,
+			Manifest.permission.USE_EXACT_ALARM
+		) == PackageManager.PERMISSION_GRANTED
 
 
-
-		val permissionRequest:MutableList<String> = ArrayList()
+		val permissionRequest: MutableList<String> = ArrayList()
 
 		if (!isNotificationGranted)
 			permissionRequest.add(Manifest.permission.SCHEDULE_EXACT_ALARM)
@@ -83,7 +94,7 @@ class MainActivity : AppCompatActivity() {
 		if (!isNotificationPostGranted)
 			permissionRequest.add(Manifest.permission.POST_NOTIFICATIONS)
 
-		if(permissionRequest.isNotEmpty())permissionLauncher.launch(permissionRequest.toTypedArray())
+		if (permissionRequest.isNotEmpty()) permissionLauncher.launch(permissionRequest.toTypedArray())
 
 	}
 

@@ -10,6 +10,7 @@ import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.findNavController
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -37,6 +38,16 @@ class TaskView : Fragment() {
 	): View {
 		binding = FragmentTaskViewBinding.inflate(inflater, container, false)
 		roomViewModel = ViewModelProvider(this)[RoomViewModel::class.java]
+
+		binding.tool.setOnMenuItemClickListener { it->
+			when(it.itemId){
+				R.id.searchView ->{findNavController().navigate(R.id.searchView)}
+			}
+			
+			return@setOnMenuItemClickListener true
+		}
+
+
 		val currentDate = MaterialDatePicker.todayInUtcMilliseconds()
 		binding.inProgress.layoutManager = LinearLayoutManager(
 			context,

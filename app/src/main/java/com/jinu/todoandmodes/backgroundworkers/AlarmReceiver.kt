@@ -31,6 +31,7 @@ class AlarmReceiver: BroadcastReceiver() {
 			.setContentText(content)
 			.setPriority(NotificationCompat.PRIORITY_DEFAULT)
 			.extend(NotificationCompat.WearableExtender().setBridgeTag("tagOne"))
+			.setVibrate(LongArray(4))
 			.build()
 
 		val notificationManager = NotificationManagerCompat.from(context)

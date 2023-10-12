@@ -27,7 +27,7 @@ class TaskHistory : AppCompatActivity() {
 			extractDate.forEach {item->
 				listOfDate.add(item.taskDoneDate!!)
 			}
-			val removeCopy =HashSet(listOfDate)
+			val removeCopy = HashSet(listOfDate)
 			val distinctList = ArrayList(removeCopy)
 
 			distinctList.forEach {item->

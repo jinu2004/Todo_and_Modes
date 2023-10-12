@@ -29,6 +29,10 @@ class RoomRepository(private val dao: Dao) {
 	fun getAllStep(mainTaskId:Int):LiveData<List<StepTask>>{
 		return dao.getAllStep(mainTaskId)
 	}
+
+	fun searchResult(query: String?):LiveData<List<TaskData>>{
+		return dao.searchResult(query)
+	}
 	suspend fun addNewTask(taskData: TaskData){
 		dao.addNewTask(taskData)
 	}

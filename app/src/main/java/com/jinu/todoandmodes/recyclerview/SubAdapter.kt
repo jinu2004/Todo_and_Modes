@@ -3,6 +3,7 @@ package com.jinu.todoandmodes.recyclerview
 import android.annotation.SuppressLint
 import android.content.Context
 import android.os.Handler
+import android.util.Log
 import android.view.KeyEvent
 import android.view.LayoutInflater
 import android.view.View
@@ -16,7 +17,10 @@ import com.jinu.todoandmodes.databinding.SubTaskDoneBinding
 import com.jinu.todoandmodes.mvvm.dataclass.StepTask
 import com.jinu.todoandmodes.mvvm.viewmodel.RoomViewModel
 
-class SubAdapter(private val sublist: ArrayList<StepTask>, private val roomViewModel: RoomViewModel) :
+class SubAdapter(
+	private val sublist: ArrayList<StepTask>,
+	private val roomViewModel: RoomViewModel,
+) :
 	RecyclerView.Adapter<SubAdapter.ViewHolder>() {
 	inner class ViewHolder(val binding: SubTaskDoneBinding) : RecyclerView.ViewHolder(binding.root)
 
@@ -45,8 +49,9 @@ class SubAdapter(private val sublist: ArrayList<StepTask>, private val roomViewM
 
 		holder.binding.radioButton.isChecked = data.state
 
-		if (data.state){
-			val background = ContextCompat.getDrawable(holder.binding.root.context, R.drawable.crossline)
+		if (data.state) {
+			val background =
+				ContextCompat.getDrawable(holder.binding.root.context, R.drawable.crossline)
 			holder.binding.text.background = background
 		}
 
@@ -72,7 +77,8 @@ class SubAdapter(private val sublist: ArrayList<StepTask>, private val roomViewM
 
 		holder.binding.text.post {
 			holder.binding.text.requestFocus()
-			val imm = holder.binding.text.context.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+			val imm =
+				holder.binding.text.context.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
 			imm.showSoftInput(holder.binding.text, InputMethodManager.SHOW_IMPLICIT)
 			holder.binding.text.selectAll()
 		}
@@ -88,13 +94,10 @@ class SubAdapter(private val sublist: ArrayList<StepTask>, private val roomViewM
 		}
 
 	}
-//	fun moveItem(fromPosition: Int, toPosition: Int) {
-//		val item = sublist.removeAt(fromPosition)
-//		sublist.add(toPosition, item)
-//		notifyItemMoved(fromPosition, toPosition)
-//	}
-	fun delete(position: Int){
-			roomViewModel.deleteStep(sublist[position])
-		notifyItemRemoved(position)
+
+	fun delete(position: Int) {
+		Log.d("adapterSize", "${sublist.size}")
+		Log.d("adapterPosition", "$position")
+		roomViewModel.deleteStep(sublist[position])
 	}
 }

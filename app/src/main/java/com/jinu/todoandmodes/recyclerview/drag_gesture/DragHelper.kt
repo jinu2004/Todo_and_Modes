@@ -1,9 +1,6 @@
 package com.jinu.todoandmodes.recyclerview.drag_gesture
 
 import androidx.recyclerview.widget.ItemTouchHelper
-import androidx.recyclerview.widget.ItemTouchHelper.DOWN
-import androidx.recyclerview.widget.ItemTouchHelper.RIGHT
-import androidx.recyclerview.widget.ItemTouchHelper.UP
 import androidx.recyclerview.widget.RecyclerView
 import com.jinu.todoandmodes.recyclerview.SubAdapter
 
@@ -19,7 +16,7 @@ class DragHelper(private val adapter: SubAdapter) : ItemTouchHelper.Callback() {
 		viewHolder: RecyclerView.ViewHolder,
 	): Int {
 		//
-		return makeMovementFlags(UP or DOWN, RIGHT)
+		return makeMovementFlags(ItemTouchHelper.ACTION_STATE_IDLE, ItemTouchHelper.RIGHT)
 	}
 
 
@@ -33,6 +30,7 @@ class DragHelper(private val adapter: SubAdapter) : ItemTouchHelper.Callback() {
 
 	override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
 		adapter.delete(viewHolder.adapterPosition)
+		adapter.notifyItemChanged(viewHolder.adapterPosition)
 
 	}
 }

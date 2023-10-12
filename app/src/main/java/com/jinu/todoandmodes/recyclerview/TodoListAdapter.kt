@@ -22,6 +22,7 @@ import com.jinu.todoandmodes.mvvm.viewmodel.RoomViewModel
 import java.time.Instant
 import java.time.ZoneId
 import java.time.format.DateTimeFormatter
+import java.util.Calendar
 
 
 class TodoListAdapter(private val list: List<TaskData>, private val roomViewModel: RoomViewModel) :
@@ -53,7 +54,12 @@ class TodoListAdapter(private val list: List<TaskData>, private val roomViewMode
 			}
 
 		}
-		if (data.dueDate < MaterialDatePicker.todayInUtcMilliseconds() && data.taskStatus == false) {
+		val startDateCalender = Calendar.getInstance()
+		startDateCalender[Calendar.HOUR_OF_DAY] = 0
+		startDateCalender[Calendar.MINUTE] = 0
+		startDateCalender[Calendar.SECOND] = 0
+		startDateCalender[Calendar.MILLISECOND] = 0
+		if (data.dueDate < startDateCalender.timeInMillis && data.taskStatus == false) {
 			if (isDarkMode(holder.binding.root.context)) {
 				val color = ContextCompat.getColor(
 					holder.binding.root.context,

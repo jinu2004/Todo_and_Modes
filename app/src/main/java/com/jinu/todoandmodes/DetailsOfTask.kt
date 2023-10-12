@@ -1,13 +1,11 @@
 package com.jinu.todoandmodes
 
 import android.annotation.SuppressLint
-import android.os.Build
 import android.os.Bundle
 import android.view.KeyEvent
 import android.view.View
 import android.view.inputmethod.EditorInfo
 import android.widget.AdapterView
-import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.ViewModelProvider
@@ -39,10 +37,11 @@ class DetailsOfTask : AppCompatActivity() {
 		val data = intent.getIntExtra(TaskView.PASSING_PRIMARY_KEY, 0)
 
 
-
-		roomViewModel.getAllStep(data).observeForever {
-			val item = it
-			val adapter = SubAdapter(item as ArrayList<StepTask>, roomViewModel)
+		val arrayList = ArrayList<StepTask>()
+		roomViewModel.getAllStep(data).observe(this) {
+			arrayList.clear()
+			arrayList.addAll(it)
+			val adapter = SubAdapter(arrayList, roomViewModel)
 			val itemTouchHelper = ItemTouchHelper(DragHelper(adapter))
 			itemTouchHelper.attachToRecyclerView(binding.recyclerView)
 			binding.recyclerView.layoutManager = GridLayoutManager(this, 1)
@@ -50,9 +49,10 @@ class DetailsOfTask : AppCompatActivity() {
 			binding.materialCardView3.setOnClickListener {
 				itemId = data
 				roomViewModel.addSub(StepTask(null, data, null, false))
-				adapter.notifyItemInserted(item.size)
+				adapter.notifyItemInserted(arrayList.size+1)
 			}
 		}
+
 
 		roomViewModel.allTask.observe(this) { it ->
 			val list = it.filter { it.primaryKey == data }
@@ -140,7 +140,6 @@ class DetailsOfTask : AppCompatActivity() {
 
 	}
 
-	@RequiresApi(Build.VERSION_CODES.O)
 	private fun formatMillisecondsToDate(milliseconds: Long): String {
 		val instant = Instant.ofEpochMilli(milliseconds)
 		val zoneId = ZoneId.systemDefault() // You can change this to your desired time zone
@@ -150,7 +149,6 @@ class DetailsOfTask : AppCompatActivity() {
 
 	}
 
-	@RequiresApi(Build.VERSION_CODES.O)
 	private fun convertMillisecondsToTime(milliseconds: Long): String {
 		val instant = Instant.ofEpochMilli(milliseconds)
 		val zoneId = ZoneId.systemDefault() // You can change this to your desired time zone

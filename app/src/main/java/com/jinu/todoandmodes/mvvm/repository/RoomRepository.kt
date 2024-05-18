@@ -16,12 +16,19 @@ class RoomRepository(private val dao: Dao) {
 	}
 
 
+
+
 	fun getByCategoryID(categoryId:Int):LiveData<List<TaskData>>{
 		return dao.getByCategoryID(categoryId)
 	}
 	suspend fun getByID(primaryKey:Int):TaskData{
 		return dao.getByID(primaryKey)
 	}
+
+	suspend fun getCategoryById(primaryKey:Int):Category{
+		return dao.getCategoryById(primaryKey)
+	}
+
 	fun getCountByCategory(categoryId:Int):Int{
 		return dao.getCountByCategory(categoryId)
 	}

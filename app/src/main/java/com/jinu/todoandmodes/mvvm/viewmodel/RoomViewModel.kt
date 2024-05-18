@@ -52,6 +52,14 @@ class RoomViewModel(application: Application) : AndroidViewModel(application) {
 		return data
 	}
 
+	fun getCategoryById(primaryKey: Int):Category?{
+		var category:Category?=null
+		viewModelScope.launch {
+			category =repository.getCategoryById(primaryKey)
+		}
+		return category
+	}
+
 	fun addNewTask(task: TaskData) {
 		viewModelScope.launch(Dispatchers.IO) {
 			repository.addNewTask(task)

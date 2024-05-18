@@ -30,14 +30,18 @@ class TaskOverViewAdapter(val list: List<Category>, private val roomViewModel: R
 		holder.binding.logo.setImageResource(data.icon!!)
 		roomViewModel.getByCategoryID(data.primaryKey!!).observeForever { it ->
 
+			val filterForToDo = it.filter { it.dueDate == MaterialDatePicker.todayInUtcMilliseconds()}
+
 			val filterForPer =
-				it.filter { it.taskStatus == true && it.taskDoneDate == MaterialDatePicker.todayInUtcMilliseconds()}
-			val filterByDate =
-				it.filter { it.startDate == MaterialDatePicker.todayInUtcMilliseconds() }
-			val percentage = (filterForPer.size.toDouble() / filterByDate.size) * 100
-			holder.binding.count.text = "${filterForPer.size}/${filterByDate.size} Tasks"
-			holder.binding.groupProgress.progress = percentage.toInt()
-			holder.binding.progressCount.text = "${percentage.toInt()}%"
+				it.filter { it.taskStatus == true && it.taskDoneDate == MaterialDatePicker.todayInUtcMilliseconds() && it.dueDate == MaterialDatePicker.todayInUtcMilliseconds()}
+			it.filter { it.startDate == MaterialDatePicker.todayInUtcMilliseconds() }
+			val percentage = (filterForPer.size.toDouble() / filterForToDo.size) * 100
+			holder.binding.count.text = "${filterForPer.size}/${filterForToDo.size} Tasks"
+			if(!percentage.isNaN() && !percentage.isInfinite()) {
+				holder.binding.groupProgress.progress = percentage.toInt()
+				holder.binding.progressCount.text = "${percentage.toInt()}%"
+			}
+
 
 		}
 		holder.binding.card.setOnClickListener {

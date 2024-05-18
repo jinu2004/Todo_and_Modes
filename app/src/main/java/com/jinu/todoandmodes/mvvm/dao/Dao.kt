@@ -32,6 +32,9 @@ interface Dao {
 	@Query("SELECT*FROM TaskTable WHERE primaryKey LIKE:primaryKey")
 	suspend fun getByID(primaryKey:Int):TaskData
 
+	@Query("SELECT * FROM category WHERE primaryKey LIKE:primaryKey")
+	suspend fun getCategoryById(primaryKey: Int):Category
+
 	@Query("SELECT*FROM TaskTable WHERE taskStatus LIKE:status")
 	fun getListByStatus(status:Boolean):LiveData<List<TaskData>>
 

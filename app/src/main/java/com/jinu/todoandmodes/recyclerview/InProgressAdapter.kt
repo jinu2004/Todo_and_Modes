@@ -29,13 +29,16 @@ class InProgressAdapter(
 
 	override fun onBindViewHolder(holder: ViewHolder, position: Int) {
 		val data = list[position]
+
+
+		if (data.categoryId != null) {
+			val categoryData = roomViewModel.getCategoryById(data.primaryKey!!)
+			if (categoryData?.icon != null)
+				holder.binding.icon.setImageResource(categoryData.icon)
+		}
 		holder.binding.textView6.text = data.taskName
 		holder.binding.category.text = data.category
-		roomViewModel.allCategory.observeForever { it ->
-			val category = it.filter { it.primaryKey == data.primaryKey }
-			if (category.isNotEmpty())
-				holder.binding.icon.setImageResource(category.first().icon!!)
-		}
+
 		roomViewModel.getAllStep(data.primaryKey!!).observeForever { it ->
 			val filterForProgress = it.filter { it.state }
 			val progress = (filterForProgress.size.toDouble() / it.size) * 100

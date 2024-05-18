@@ -53,6 +53,7 @@ class TodoListAdapter(private val list: List<TaskData>, private val roomViewMode
 				updateStatus(checked,data)
 			}
 
+
 		}
 		val startDateCalender = Calendar.getInstance()
 		startDateCalender[Calendar.HOUR_OF_DAY] = 0

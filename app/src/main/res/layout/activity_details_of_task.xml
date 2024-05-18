@@ -251,52 +251,6 @@
             </com.google.android.material.card.MaterialCardView>
 
 
-            <com.google.android.material.card.MaterialCardView
-                android:id="@+id/attach_file"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_margin="10dp"
-                app:cardElevation="1dp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/time_reminder"
-                app:strokeColor="?attr/colorSurface"
-                app:strokeWidth="0dp">
-
-                <androidx.constraintlayout.widget.ConstraintLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="10dp">
-
-                    <ImageView
-                        android:id="@+id/radioButton3"
-                        android:layout_width="30dp"
-                        android:layout_height="30dp"
-                        android:src="@drawable/round_attach_file_24"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent"
-                        app:tint="?attr/colorTertiary"
-                        tools:ignore="ContentDescription,DuplicateSpeakableTextCheck" />
-
-                    <TextView
-                        android:id="@+id/text4"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_margin="10dp"
-                        android:fontFamily="sans-serif-black"
-                        android:text="@string/attach_file"
-                        android:textAlignment="center"
-                        android:textColor="?attr/colorTertiary"
-                        app:layout_constraintBottom_toBottomOf="@id/radioButton3"
-                        app:layout_constraintStart_toEndOf="@+id/radioButton3"
-                        app:layout_constraintTop_toTopOf="@id/radioButton3"
-                        tools:ignore="DuplicateSpeakableTextCheck,TextContrastCheck" />
-
-
-                </androidx.constraintlayout.widget.ConstraintLayout>
-
-            </com.google.android.material.card.MaterialCardView>
 
             <com.google.android.material.card.MaterialCardView
                 android:layout_width="match_parent"
@@ -310,7 +264,7 @@
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/attach_file">
+                app:layout_constraintTop_toBottomOf="@+id/time_reminder">
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"

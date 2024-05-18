@@ -26,8 +26,8 @@ class TaskView : Fragment() {
 	private lateinit var roomViewModel: RoomViewModel
 
 	companion object{
-		val PASSING_PRIMARY_KEY = "primary"
-		val PASSING_SELECTED_CATEGORY = "current_category"
+		const val PASSING_PRIMARY_KEY = "primary"
+		const val PASSING_SELECTED_CATEGORY = "current_category"
 	}
 
 	@SuppressLint("SetTextI18n")
@@ -61,14 +61,14 @@ class TaskView : Fragment() {
 			val percentage = (filter.size.toDouble() / filterByDate.size) * 100
 			if (filter.isNotEmpty()) binding.percentText.text = " ${percentage.toInt()}%"
 			binding.circularProgressIndicator.progress = percentage.toInt()
-			if (percentage == 0.0) binding.addressingText.text = "You have to complete tasks!!"
-			else if (percentage > 0 && percentage < 50) binding.addressingText.text = "keep it up!!"
-			else if (percentage > 50 && percentage < 80) binding.addressingText.text =
+			if (percentage.toInt() == 0) binding.addressingText.text = "You have to complete tasks!!"
+			else if (percentage > 0.0 && percentage < 50.0) binding.addressingText.text = "keep it up!!"
+			else if (percentage > 50.0 && percentage < 80.0) binding.addressingText.text =
 				"you have to do a little more"
 			else if (percentage.toInt() == 100) binding.addressingText.text = "Congratulation"
 
 
-			val filterToDo = it.filter { it.taskStatus == false && it.dueDate!! >= it.startDate!! }
+			val filterToDo = it.filter { it.taskStatus == false && it.dueDate == MaterialDatePicker.todayInUtcMilliseconds() }
 			val adapter = InProgressAdapter(filterToDo, roomViewModel)
 			binding.inProgress.adapter = adapter
 			adapter.setOnclickListener(object : InProgressAdapter.OnClickListener {

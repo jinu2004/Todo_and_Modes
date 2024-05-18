@@ -110,13 +110,13 @@ class BottomSheet : BottomSheetDialogFragment() {
 		}
 
 
-		val startDateCalender = Calendar.getInstance()
-		startDateCalender[Calendar.HOUR_OF_DAY] = 0
-		startDateCalender[Calendar.MINUTE] = 0
-		startDateCalender[Calendar.SECOND] = 0
-		startDateCalender[Calendar.MILLISECOND] = 0
-		val startDate = startDateCalender.timeInMillis
-		datePickerData = startDateCalender.timeInMillis
+//		val startDateCalender = Calendar.getInstance()
+//		startDateCalender[Calendar.HOUR_OF_DAY] = 0
+//		startDateCalender[Calendar.MINUTE] = 0
+//		startDateCalender[Calendar.SECOND] = 0
+//		startDateCalender[Calendar.MILLISECOND] = 0
+		val startDate = MaterialDatePicker.todayInUtcMilliseconds()
+		datePickerData = MaterialDatePicker.todayInUtcMilliseconds()
 
 
 
@@ -145,7 +145,9 @@ class BottomSheet : BottomSheetDialogFragment() {
 				)
 				binding.text.text.clear()
 				Log.d("Date","$datePickerData")
-			} else {
+			}
+			else if(text.isNotEmpty() && datePickerData == null) {}
+			else{
 				Toast.makeText(context, "please enter the task name", Toast.LENGTH_SHORT).show()
 				Log.e("date", "$datePickerData")
 				Log.e("msg", text)

@@ -79,13 +79,14 @@
                 app:trackCornerRadius="100dp"
                 app:indicatorSize="50dp"
                 android:max="100"
-                android:progress="30"
+                android:progress="0"
                 app:layout_constraintBottom_toBottomOf="parent"/>
             <TextView
                 android:id="@+id/progress_count"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="4%"
+                android:text="0%"
+                android:textSize="12.dp"
                 android:textStyle="bold"
                 app:layout_constraintTop_toTopOf="@id/group_progress"
                 app:layout_constraintEnd_toEndOf="@id/group_progress"

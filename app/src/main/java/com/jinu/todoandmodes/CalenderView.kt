@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import com.jinu.todoandmodes.databinding.FragmentCalenderViewBinding
 import com.jinu.todoandmodes.mvvm.viewmodel.RoomViewModel
@@ -22,6 +23,8 @@ class CalenderView : Fragment() {
 	): View {
 		binding = FragmentCalenderViewBinding.inflate(inflater, container, false)
 		roomViewModel = ViewModelProvider(this)[RoomViewModel::class.java]
+
+		binding.materialToolbar4.setNavigationOnClickListener { findNavController().navigate(R.id.action_calenderView_to_home_fragment) }
 
 		binding.imageView.visibility = View.INVISIBLE
 
